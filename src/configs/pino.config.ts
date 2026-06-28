@@ -1,14 +1,14 @@
 import { registerAs } from '@nestjs/config';
 import type { Params } from 'pino-nestjs';
 import z from 'zod';
-import { APP_NAME } from '../common/constants/app.js';
-import { isNonProduction } from '../common/constants/environment.js';
+import { APP_NAME } from '#constants/app.js';
+import { isNonProduction } from '#constants/environment.js';
 
 interface PinoLoggerOptions extends Params {}
 
 import type { LevelWithSilent } from 'pino';
 import { fromError } from 'zod-validation-error';
-import { ENV_VALIDATION_FAILED_MESSAGE } from '../common/constants/message.js';
+import { ENV_VALIDATION_FAILED_MESSAGE } from '#constants/message.js';
 
 export const LOG_LEVELS = [
 	'fatal',

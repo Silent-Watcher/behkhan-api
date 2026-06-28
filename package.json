@@ -1,7 +1,7 @@
 {
 	"name": "behkhaan-api",
 	"version": "0.0.1",
-  "type": "module",
+	"type": "module",
 	"private": true,
 	"engines": {
 		"node": ">=22"
@@ -66,5 +66,10 @@
 		"ts-node": "^10.9.2",
 		"tsconfig-paths": "^4.2.0",
 		"typescript": "^5.7.3"
+	},
+	"imports": {
+		"#config/*": "./dist/config/*",
+		"#enums/*": "./dist/common/enums/*",
+		"#constants/*": "./dist/common/constants/*"
 	}
 }
