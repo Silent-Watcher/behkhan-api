@@ -23,7 +23,7 @@
 		"formatter": {
 			"quoteStyle": "single",
 			"semicolons": "always",
-			"lineWidth": 120
+			"lineWidth": 80
 		}
 	},
 	"assist": {

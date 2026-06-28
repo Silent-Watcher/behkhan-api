@@ -1,7 +1,8 @@
 import { isIP } from 'node:net';
-import z from 'zod';
 import { registerAs } from '@nestjs/config';
+import z from 'zod';
 import { fromError } from 'zod-validation-error';
+import { ENV_VALIDATION_FAILED_MESSAGE } from '../common/constants/message';
 
 export interface HttpConfig {
 	host: string;
@@ -46,10 +47,9 @@ export default registerAs('http', (): HttpConfig => {
 	const parseResult = httpConfigSchema.safeParse(config);
 
 	if (!parseResult.success) {
-		throw new Error(
-			`Environment validation failed \n One or more required environment variables are missing or contain invalid values. \n Please review the errors below, update your environment configuration, and restart the application. \n ${fromError(parseResult.error).toString()}`,
-			{ cause: parseResult.error },
-		);
+		throw new Error(ENV_VALIDATION_FAILED_MESSAGE(fromError(parseResult.error).toString()), {
+			cause: parseResult.error,
+		});
 	}
 
 	return parseResult.data;
