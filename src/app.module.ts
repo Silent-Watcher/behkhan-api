@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { LoggerModule } from 'pino-nestjs';
+import { AppController } from './app.controller.js';
 import adminPanelConfig from './configs/admin-panel.config.js';
 import { configModuleOptions } from './configs/index.js';
 import pinoConfig from './configs/pino.config.js';
-import { AppController } from './app.controller.js';
 
 @Module({
 	imports: [

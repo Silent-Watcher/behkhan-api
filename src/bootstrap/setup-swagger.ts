@@ -25,10 +25,8 @@ export function setupSwagger(app: INestApplication): void {
 		useGlobalPrefix: true,
 		swaggerOptions: {
 			displayRequestDuration: true,
-
 		},
-        customSiteTitle: `${APP_NAME} docs`,
-       
+		customSiteTitle: `${APP_NAME} docs`,
 	};
 
 	const documentFactory = () =>
