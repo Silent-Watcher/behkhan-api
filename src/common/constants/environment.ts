@@ -1,4 +1,4 @@
-import { Environment } from '../enums/environment';
+import { Environment } from '../enums/environment.js';
 
 export const nodeEnv = process.env.NODE_ENV ?? Environment.Development;
 

@@ -5,6 +5,9 @@
 		"target": "es2022",
 		"keepClassNames": true,
 		"preserveAllComments": false,
+		"transform": {
+			"decoratorMetadata": true
+		},
 		"externalHelpers": true,
 		"parser": {
 			"syntax": "typescript",
@@ -13,5 +16,8 @@
 		},
 		"baseUrl": "./"
 	},
+    "module":{
+        "type": "es6"
+    },
 	"minify": true
 }

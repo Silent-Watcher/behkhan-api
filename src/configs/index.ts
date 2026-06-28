@@ -1,10 +1,11 @@
 import type { ConfigModuleOptions } from '@nestjs/config';
-import httpConfig from './http.config';
-import pinoConfig from './pino.config';
+import adminPanelConfig from './admin-panel.config.js';
+import httpConfig from './http.config.js';
+import pinoConfig from './pino.config.js';
 
 export const configModuleOptions: ConfigModuleOptions = {
 	isGlobal: true,
 	skipProcessEnv: true,
 	ignoreEnvFile: true,
-	load: [httpConfig, pinoConfig],
+	load: [httpConfig, pinoConfig, adminPanelConfig],
 };

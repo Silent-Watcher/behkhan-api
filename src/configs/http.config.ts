@@ -2,7 +2,7 @@ import { isIP } from 'node:net';
 import { registerAs } from '@nestjs/config';
 import z from 'zod';
 import { fromError } from 'zod-validation-error';
-import { ENV_VALIDATION_FAILED_MESSAGE } from '../common/constants/message';
+import { ENV_VALIDATION_FAILED_MESSAGE } from '../common/constants/message.js';
 
 export interface HttpConfig {
 	host: string;
@@ -40,16 +40,21 @@ const httpConfigSchema = z.object({
 
 export default registerAs('http', (): HttpConfig => {
 	const config = {
-		host: process.env?.HTTP_HOST,
+        host: process.env?.HTTP_HOST,
 		port: process.env?.HTTP_PORT,
 	};
 
 	const parseResult = httpConfigSchema.safeParse(config);
 
 	if (!parseResult.success) {
-		throw new Error(ENV_VALIDATION_FAILED_MESSAGE(fromError(parseResult.error).toString()), {
-			cause: parseResult.error,
-		});
+		throw new Error(
+			ENV_VALIDATION_FAILED_MESSAGE(
+				fromError(parseResult.error).toString(),
+			),
+			{
+				cause: parseResult.error,
+			},
+		);
 	}
 
 	return parseResult.data;
