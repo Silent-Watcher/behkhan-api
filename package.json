@@ -9,10 +9,10 @@
 	"engineStrict": true,
 	"scripts": {
 		"build": "nest build",
-		"start": "nest start -b swc",
-		"start:dev": "nest start -b swc -w",
+		"start": "nest --env-file=./env/.env.production start -b swc",
+		"start:dev": "nest --env-file=./env/.env.development start -b swc -w",
 		"start:debug": "nest start --debug --watch",
-		"start:prod": "node dist/main",
+		"start:prod": "node --env-file=./env/.env.production dist/main",
 		"check": "npx @biomejs/biome check --write",
 		"test": "jest",
 		"test:watch": "jest --watch",
@@ -24,11 +24,14 @@
 	},
 	"dependencies": {
 		"@nestjs/common": "^11.0.1",
+		"@nestjs/config": "^4.0.4",
 		"@nestjs/core": "^11.0.1",
 		"@nestjs/platform-express": "^11.0.1",
 		"@swc/helpers": "^0.5.23",
 		"reflect-metadata": "^0.2.2",
-		"rxjs": "^7.8.1"
+		"rxjs": "^7.8.1",
+		"zod": "^4.4.3",
+		"zod-validation-error": "^5.0.0"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.5.1",
