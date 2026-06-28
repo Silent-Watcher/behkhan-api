@@ -4,6 +4,7 @@ import { LoggerModule } from 'pino-nestjs';
 import adminPanelConfig from './configs/admin-panel.config.js';
 import { configModuleOptions } from './configs/index.js';
 import pinoConfig from './configs/pino.config.js';
+import { AppController } from './app.controller.js';
 
 @Module({
 	imports: [
@@ -13,7 +14,7 @@ import pinoConfig from './configs/pino.config.js';
 			AdminModule.createAdminAsync(adminPanelConfig.asProvider()),
 		),
 	],
-	controllers: [],
+	controllers: [AppController],
 	providers: [],
 })
 export class AppModule {}

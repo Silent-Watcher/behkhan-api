@@ -22,10 +22,17 @@ export function setupSwagger(app: INestApplication): void {
 		explorer: true,
 		customCss: theme.getBuffer(SwaggerThemeNameEnum.DARK),
 		jsonDocumentUrl: 'swagger/json',
+		useGlobalPrefix: true,
+		swaggerOptions: {
+			displayRequestDuration: true,
+
+		},
+        customSiteTitle: `${APP_NAME} docs`,
+       
 	};
 
 	const documentFactory = () =>
 		SwaggerModule.createDocument(app, swaggerConfig);
 
-	SwaggerModule.setup('api-docs', app, documentFactory, options);
+	SwaggerModule.setup('docs', app, documentFactory, options);
 }
