@@ -1,5 +1,10 @@
 import type { INestApplication } from '@nestjs/common';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import {
+	DocumentBuilder,
+	type SwaggerCustomOptions,
+	SwaggerModule,
+} from '@nestjs/swagger';
+import { SwaggerTheme, SwaggerThemeNameEnum } from 'swagger-themes';
 import { APP_NAME } from '#constants/app.js';
 import { isProduction } from '#constants/environment.js';
 
@@ -11,9 +16,16 @@ export function setupSwagger(app: INestApplication): void {
 		.setDescription(`The ${APP_NAME}  description`)
 		.setVersion('1.0')
 		.build();
+
+	const theme = new SwaggerTheme();
+	const options: SwaggerCustomOptions = {
+		explorer: true,
+		customCss: theme.getBuffer(SwaggerThemeNameEnum.DARK),
+		jsonDocumentUrl: 'swagger/json',
+	};
+
 	const documentFactory = () =>
 		SwaggerModule.createDocument(app, swaggerConfig);
-	SwaggerModule.setup('api-docs', app, documentFactory, {
-		jsonDocumentUrl: 'swagger/json',
-	});
+
+	SwaggerModule.setup('api-docs', app, documentFactory, options);
 }
