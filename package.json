@@ -76,7 +76,8 @@
 	"imports": {
 		"#config/*": "./dist/config/*",
 		"#enums/*": "./dist/common/enums/*",
-		"#constants/*": "./dist/common/constants/*"
+		"#constants/*": "./dist/common/constants/*",
+		"#modules/*": "./dist/modules/*"
 	},
 	"allowScripts": {
 		"unrs-resolver@1.12.2": true,

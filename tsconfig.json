@@ -24,7 +24,8 @@
 		"paths": {
 			"#config/*": ["./src/config/*"],
 			"#enums/*": ["./src/common/enums/*"],
-			"#constants/*": ["./src/common/constants/*"]
+			"#constants/*": ["./src/common/constants/*"],
+			"#modules/*": ["./src/modules/*"]
 		}
 	}
 }

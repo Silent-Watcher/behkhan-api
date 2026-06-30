@@ -4,6 +4,8 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from 'pino-nestjs';
 import { isDevelopment } from '#constants/environment.js';
+import { AuthModule } from '#modules/auth/auth.module.js';
+import { UserModule } from '#modules/user/user.module.js';
 import { AppController } from './app.controller.js';
 import adminPanelConfig from './configs/admin-panel.config.js';
 import databaseConfig from './configs/database.config.js';
@@ -20,6 +22,7 @@ import pinoConfig from './configs/pino.config.js';
 		TypeOrmModule.forRootAsync({
 			useFactory(databaseConf: ConfigType<typeof databaseConfig>) {
 				return {
+					type: 'postgres',
 					...databaseConf,
 					autoLoadEntities: true,
 					synchronize: isDevelopment,
@@ -29,6 +32,8 @@ import pinoConfig from './configs/pino.config.js';
 			},
 			inject: [databaseConfig.KEY],
 		}),
+		UserModule,
+		AuthModule,
 	],
 	controllers: [AppController],
 	providers: [],
