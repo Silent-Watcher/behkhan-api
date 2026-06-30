@@ -1,12 +1,12 @@
+import type { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface.js';
 import { registerAs } from '@nestjs/config';
 import z from 'zod';
 import { fromError } from 'zod-validation-error';
 import { ENV_VALIDATION_FAILED_MESSAGE } from '#constants/message.js';
-import type { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface.js';
 
 export default registerAs('cors', (): CorsOptions => {
 	const config: CorsOptions = {
-		origin: process.env.CORS_ORIGINS?.split(','),
+		origin: process.env?.CORS_ORIGINS?.split(','),
 		credentials: true,
 		maxAge: 86400, // 1 day in seconds
 	};
@@ -25,7 +25,7 @@ export default registerAs('cors', (): CorsOptions => {
 			),
 		);
 
-	const parseResult = z.safeParse(OriginSchema, process.env.CORS_ORIGINS);
+	const parseResult = z.safeParse(OriginSchema, process.env?.CORS_ORIGINS);
 
 	if (!parseResult.success) {
 		throw new Error(
