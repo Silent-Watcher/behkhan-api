@@ -1,10 +1,12 @@
-import { Controller } from '@nestjs/common';
+import { Controller, forwardRef, Inject } from '@nestjs/common';
 import { UserService } from './user.service.js';
 
 @Controller('user')
 export class UserController {
-	constructor(private readonly userService: UserService) {}
+	constructor(
+		@Inject(forwardRef(() => UserService))
+		private readonly userService: UserService,
+	) {}
 }
-
 
 console.log(Reflect.getMetadata('design:paramtypes', UserController));
