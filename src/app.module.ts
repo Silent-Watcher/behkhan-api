@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from 'pino-nestjs';
 import { isDevelopment } from '#constants/environment.js';
 import { AuthModule } from '#modules/auth/auth.module.js';
+import { UserEntity } from '#modules/user/user.entity.js';
 import { UserModule } from '#modules/user/user.module.js';
 import { AppController } from './app.controller.js';
 import adminPanelConfig from './configs/admin-panel.config.js';
@@ -28,6 +29,7 @@ import pinoConfig from './configs/pino.config.js';
 					synchronize: isDevelopment,
 					logging: isDevelopment,
 					maxQueryExecutionTime: 1000,
+					entities: [UserEntity],
 				};
 			},
 			inject: [databaseConfig.KEY],
