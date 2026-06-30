@@ -1,15 +1,15 @@
 import type { AdminModuleOptions, CustomLoader } from '@adminjs/nestjs';
 import { registerAs } from '@nestjs/config';
 
-export interface AdminPanelConfig extends AdminModuleOptions, CustomLoader {}
+export type AdminPanelConfig = AdminModuleOptions & CustomLoader;
 
-export default registerAs('adminPanel', () => {
-	const config: AdminPanelConfig = {
+export default registerAs('adminPanel', (): AdminPanelConfig => {
+	const config: AdminPanelConfig = Object.freeze({
 		adminJsOptions: {
 			rootPath: '/admin',
 			resources: [],
 		},
-	};
+	});
 
 	return config;
 });

@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common';
+import type { ConfigType } from '@nestjs/config';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from 'pino-nestjs';
+import { isDevelopment } from '#constants/environment.js';
 import { AppController } from './app.controller.js';
 import adminPanelConfig from './configs/admin-panel.config.js';
+import databaseConfig from './configs/database.config.js';
 import { configModuleOptions } from './configs/index.js';
 import pinoConfig from './configs/pino.config.js';
-import typeormConfig from './configs/typeorm.config.js';
 
 @Module({
 	imports: [
@@ -15,7 +17,18 @@ import typeormConfig from './configs/typeorm.config.js';
 		import('@adminjs/nestjs').then(({ AdminModule }) =>
 			AdminModule.createAdminAsync(adminPanelConfig.asProvider()),
 		),
-		TypeOrmModule.forRootAsync(typeormConfig.asProvider()),
+		TypeOrmModule.forRootAsync({
+			useFactory(databaseConf: ConfigType<typeof databaseConfig>) {
+				return {
+					...databaseConf,
+					autoLoadEntities: true,
+					synchronize: isDevelopment,
+					logging: isDevelopment,
+					maxQueryExecutionTime: 1000,
+				};
+			},
+			inject: [databaseConfig.KEY],
+		}),
 	],
 	controllers: [AppController],
 	providers: [],
