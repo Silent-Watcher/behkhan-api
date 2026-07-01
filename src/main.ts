@@ -19,12 +19,13 @@ async function bootstrap() {
 		infer: true,
 	});
 	const { port, host } = config.get<HttpConfig>('http', { infer: true });
+	const sessionSecret = config.get('secret.session', { infer: true });
 	const allowedOrigins: Set<string> = new Set(origin);
 
 	const logger = app.get(Logger);
 
 	setupStartupLogs(logger);
-	setupSession(app);
+	setupSession(app, sessionSecret);
 
 	app.useLogger(logger);
 	app.use(helmet());
