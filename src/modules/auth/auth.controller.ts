@@ -1,15 +1,5 @@
-import {
-	Controller,
-	forwardRef,
-	Get,
-	Inject,
-	Post,
-	Req,
-	UseGuards,
-} from '@nestjs/common';
-import type { Request } from 'express';
+import { Controller, forwardRef, Inject, Post } from '@nestjs/common';
 import { AuthService } from './auth.service.js';
-import { LocalAuthGuard } from './guards/local-auth.guard.js';
 
 @Controller('auth')
 export class AuthController {
@@ -18,14 +8,6 @@ export class AuthController {
 		private readonly authService: AuthService,
 	) {}
 
-	@UseGuards(LocalAuthGuard)
-	@Post('login')
-	async login(@Req() req: Request) {
-		return req.user;
-	}
-
-	@Get('logout')
-	async logout(@Req() req: Request) {
-		return req.logOut({}, () => {});
-	}
+	@Post('signup')
+	signup() {}
 }
