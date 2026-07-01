@@ -16,6 +16,6 @@ export const configModuleOptions: ConfigModuleOptions = {
 		adminPanelConfig,
 		corsConfig,
 		databaseConfig,
-        secretConfig
+		secretConfig,
 	],
 };

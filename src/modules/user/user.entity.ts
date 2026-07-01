@@ -1,7 +1,7 @@
 import { Column, Entity, Index } from 'typeorm';
 import { AbstractEntity } from '#database/entities/abstract.entity.js';
 
-@Entity()
+@Entity({ name: 'users' })
 export class UserEntity extends AbstractEntity {
 	@Column({
 		type: 'varchar',

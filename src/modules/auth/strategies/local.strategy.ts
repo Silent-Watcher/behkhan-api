@@ -1,4 +1,9 @@
-import { forwardRef, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+	forwardRef,
+	Inject,
+	Injectable,
+	UnauthorizedException,
+} from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
 import { AuthService } from '../auth.service.js';
@@ -7,14 +12,16 @@ import { AuthService } from '../auth.service.js';
 export class LocalStrategy extends PassportStrategy(Strategy) {
 	constructor(
 		@Inject(forwardRef(() => AuthService))
-		private authService: AuthService,
+		private readonly authService: AuthService,
 	) {
-		super({});
+		super({
+			usernameField: 'identifier',
+		});
 	}
 
-	async validate(username: string, password: string) {
-		const user = await this.authService.validateUserByUsernameAndPassword(
-			username,
+	async validate(identifier: string, password: string) {
+		const user = await this.authService.validateUserByPassword(
+			identifier,
 			password,
 		);
 

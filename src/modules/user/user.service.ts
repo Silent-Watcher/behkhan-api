@@ -9,13 +9,24 @@ export class UserService {
 		private readonly userRepository: UserRepository,
 	) {}
 
-	findOneByUsername(username: string): Promise<UserEntity | null> {
-		return this.userRepository.findOneByUsername(username);
+	save(user: UserEntity) {
+		return this.userRepository.save(user);
 	}
 
-	findOneByUsernameWithPassowrd(
-		username: string,
+	findOneByIdentifierWithPassword<T extends keyof UserEntity = never>(
+		identifier: string,
+		select?: (keyof UserEntity)[],
+	): Promise<Pick<UserEntity, T | 'password'> | null> {
+		return this.userRepository.findOneByIdentifierWithPassword(
+			identifier,
+			select,
+		);
+	}
+
+	findOneByIdentifier(
+		identifier: string,
+		projection?: Partial<Record<keyof UserEntity, boolean>>,
 	): Promise<UserEntity | null> {
-		return this.userRepository.findOneByUsernameWithPassowrd(username);
+		return this.userRepository.findOneByIdentifier(identifier, projection);
 	}
 }

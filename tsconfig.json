@@ -25,6 +25,7 @@
 			"#config/*": ["./src/config/*"],
 			"#enums/*": ["./src/common/enums/*"],
 			"#constants/*": ["./src/common/constants/*"],
+			"#regex/*": ["./src/common/regex/*"],
 			"#modules/*": ["./src/modules/*"],
 			"#database/*": ["./src/database/*"],
 			"#bootstrap/*": ["./src/bootstrap/*"]

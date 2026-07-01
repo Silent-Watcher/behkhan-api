@@ -36,6 +36,7 @@
 		"@nestjs/typeorm": "^11.0.3",
 		"@swc/helpers": "^0.5.23",
 		"adminjs": "^7.8.17",
+		"argon2": "^0.44.0",
 		"class-transformer": "^0.5.1",
 		"class-validator": "^0.15.1",
 		"express-formidable": "^1.2.0",
@@ -84,6 +85,7 @@
 		"#config/*": "./dist/config/*",
 		"#enums/*": "./dist/common/enums/*",
 		"#constants/*": "./dist/common/constants/*",
+		"#regex/*": "./dist/common/regex/*",
 		"#modules/*": "./dist/modules/*",
 		"#database/*": "./dist/database/*",
 		"#bootstrap/*": "./dist/bootstrap/*"
@@ -92,6 +94,7 @@
 		"unrs-resolver@1.12.2": true,
 		"esbuild@0.25.12": true,
 		"@swc/core@1.15.43": true,
-		"@scarf/scarf@1.4.0": true
+		"@scarf/scarf@1.4.0": true,
+		"argon2@0.44.0": true
 	}
 }

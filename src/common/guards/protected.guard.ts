@@ -1,0 +1,27 @@
+import type { CanActivate, ExecutionContext } from '@nestjs/common';
+// biome-ignore lint/style/useImportType: <should emit some metadata for the reflector>
+import { Reflector } from '@nestjs/core';
+import type { Request } from 'express';
+import type { Observable } from 'rxjs';
+import { IS_PUBLIC_TOKEN } from '../decorators/public.decorator.js';
+
+export class ProtectedGuard implements CanActivate {
+	constructor(private reflector: Reflector) {}
+
+	canActivate(
+		context: ExecutionContext,
+	): boolean | Promise<boolean> | Observable<boolean> {
+		const isPublic = this.reflector.getAllAndOverride<boolean>(
+			IS_PUBLIC_TOKEN,
+			[context.getClass(), context.getHandler()],
+		);
+
+		if (isPublic) {
+			return true;
+		}
+
+		const request = context.switchToHttp().getRequest<Request>();
+
+		return request.isAuthenticated();
+	}
+}

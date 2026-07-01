@@ -10,17 +10,39 @@ export class UserRepository {
 		private readonly userRepository: Repository<UserEntity>,
 	) {}
 
-	findOneByUsername(username: string): Promise<UserEntity | null> {
-		return this.userRepository.findOneBy({ username });
+	findOneByIdentifier(
+		identifier: string,
+		projection?: Partial<Record<keyof UserEntity, boolean>>,
+	): Promise<UserEntity | null> {
+		return this.userRepository.findOne({
+			where: [
+				{ email: identifier },
+				{ phone: identifier },
+				{ username: identifier },
+			],
+			select: projection,
+		});
 	}
 
-	findOneByUsernameWithPassowrd(
-		username: string,
+	findOneByIdentifierWithPassword(
+		identifier: string,
+		select?: (keyof UserEntity)[],
 	): Promise<UserEntity | null> {
-		return this.userRepository
-			.createQueryBuilder('user')
-			.addSelect('user.password')
-			.where('user.username = :username', { username })
-			.getOne();
+		const qb = this.userRepository.createQueryBuilder('user');
+
+		if (select && select.length > 0) {
+			qb.select(select.map((field) => `user.${field}`));
+		}
+
+		qb.addSelect('user.password').where(
+			'user.email = :identifier OR user.phone = :identifier OR user.username = :identifier',
+			{ identifier },
+		);
+
+		return qb.getOne();
+	}
+
+	save(user: UserEntity): Promise<UserEntity> {
+		return this.userRepository.save(user);
 	}
 }

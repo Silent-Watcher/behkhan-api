@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import type { ConfigType } from '@nestjs/config';
 import { ConfigModule } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from 'pino-nestjs';
 import { isDevelopment } from '#constants/environment.js';
@@ -8,6 +9,7 @@ import { AuthModule } from '#modules/auth/auth.module.js';
 import { UserEntity } from '#modules/user/user.entity.js';
 import { UserModule } from '#modules/user/user.module.js';
 import { AppController } from './app.controller.js';
+import { ProtectedGuard } from './common/guards/protected.guard.js';
 import adminPanelConfig from './configs/admin-panel.config.js';
 import databaseConfig from './configs/database.config.js';
 import { configModuleOptions } from './configs/index.js';
@@ -38,6 +40,11 @@ import pinoConfig from './configs/pino.config.js';
 		AuthModule,
 	],
 	controllers: [AppController],
-	providers: [],
+	providers: [
+		{
+			provide: APP_GUARD,
+			useClass: ProtectedGuard,
+		},
+	],
 })
 export class AppModule {}
