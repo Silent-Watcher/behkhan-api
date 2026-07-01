@@ -1,16 +1,14 @@
 import { registerAs } from '@nestjs/config';
 import _env from '../bootstrap/setup-env.js';
 
-export interface HttpConfig {
-	host: string;
-	port: number;
+export interface SecretConfig {
+	session: string;
 }
 
 export default registerAs(
-	'http',
-	(): HttpConfig =>
+	'secret',
+	(): SecretConfig =>
 		Object.freeze({
-			host: _env.HTTP_HOST,
-			port: _env.HTTP_PORT,
+			session: _env.SESSION_SECRET,
 		} as const),
 );

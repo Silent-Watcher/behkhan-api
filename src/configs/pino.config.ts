@@ -7,14 +7,16 @@ type PinoLoggerOptions = Params;
 
 import _env from '../bootstrap/setup-env.js';
 
-export default registerAs('pino', (): PinoLoggerOptions => {
-	const config: PinoLoggerOptions = {
-		pinoHttp: {
-			name: APP_NAME,
-			level: _env.LOG_LEVEL,
-			transport: isNonProduction ? { target: 'pino-pretty' } : undefined,
-		},
-	};
-
-	return config;
-});
+export default registerAs(
+	'pino',
+	(): PinoLoggerOptions =>
+		Object.freeze({
+			pinoHttp: {
+				name: APP_NAME,
+				level: _env.LOG_LEVEL,
+				transport: isNonProduction
+					? { target: 'pino-pretty' }
+					: undefined,
+			},
+		} as const),
+);

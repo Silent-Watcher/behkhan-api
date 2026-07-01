@@ -5,6 +5,7 @@ import { envSchema } from '../validation/schemas/env.js';
 export type Env = z.infer<typeof envSchema>;
 
 export function setupEnv(schema = envSchema): Env {
+	// biome-ignore lint/style/noProcessEnv: <the only place which we are validating and parsing envs>
 	const parseResult = schema.safeParse(process.env);
 
 	if (!parseResult.success) {

@@ -9,14 +9,14 @@ export interface DatabaseConfig {
 	database: string;
 }
 
-export default registerAs('database', (): DatabaseConfig => {
-	const config: DatabaseConfig = Object.freeze({
-		port: _env.DB_PORT,
-		host: _env.DB_HOST,
-		username: _env.DB_USERNAME,
-		password: _env.DB_PASSWORD,
-		database: _env.DB_NAME,
-	} as const);
-
-	return config;
-});
+export default registerAs(
+	'database',
+	(): DatabaseConfig =>
+		Object.freeze({
+			port: _env.DB_PORT,
+			host: _env.DB_HOST,
+			username: _env.DB_USERNAME,
+			password: _env.DB_PASSWORD,
+			database: _env.DB_NAME,
+		} as const),
+);

@@ -55,4 +55,5 @@ export const envSchema = z.object({
 	DB_USERNAME: z.string().trim().min(1, 'DB_USERNAME is required'),
 	DB_PASSWORD: z.string().min(1, 'DB_PASSWORD is required'),
 	DB_NAME: z.string().trim().min(1, 'DB_NAME is required'),
+	SESSION_SECRET: z.string().trim().min(1, 'SESSION_SECRET  required'),
 });
