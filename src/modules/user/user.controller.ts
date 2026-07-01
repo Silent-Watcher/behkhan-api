@@ -8,5 +8,3 @@ export class UserController {
 		private readonly userService: UserService,
 	) {}
 }
-
-console.log(Reflect.getMetadata('design:paramtypes', UserController));

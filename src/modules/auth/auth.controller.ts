@@ -1,5 +1,7 @@
-import { Controller, forwardRef, Inject, Post } from '@nestjs/common';
+import { Body, Controller, forwardRef, Inject, Post } from '@nestjs/common';
 import { AuthService } from './auth.service.js';
+// biome-ignore lint/style/useImportType: <we need to emit some metadata for our dto>
+import { SignupDto } from './dtos/signup.dto.js';
 
 @Controller('auth')
 export class AuthController {
@@ -9,5 +11,7 @@ export class AuthController {
 	) {}
 
 	@Post('signup')
-	signup() {}
+	signup(@Body() signupDto: SignupDto) {
+		return signupDto;
+	}
 }

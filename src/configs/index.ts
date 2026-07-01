@@ -4,6 +4,7 @@ import corsConfig from './cors.config.js';
 import databaseConfig from './database.config.js';
 import httpConfig from './http.config.js';
 import pinoConfig from './pino.config.js';
+import secretConfig from './secret.config.js';
 
 export const configModuleOptions: ConfigModuleOptions = {
 	isGlobal: true,
@@ -15,5 +16,6 @@ export const configModuleOptions: ConfigModuleOptions = {
 		adminPanelConfig,
 		corsConfig,
 		databaseConfig,
+        secretConfig
 	],
 };

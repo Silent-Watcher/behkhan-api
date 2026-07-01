@@ -1,3 +1,4 @@
+import { ValidationPipe } from '@nestjs/common';
 import type { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface.js';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
@@ -34,6 +35,7 @@ async function bootstrap() {
 	setupCors(app, allowedOrigins, { credentials, maxAge });
 	setupSwagger(app);
 
+	app.useGlobalPipes(new ValidationPipe({}));
 	await app.listen(port, host, () => {});
 }
 bootstrap();

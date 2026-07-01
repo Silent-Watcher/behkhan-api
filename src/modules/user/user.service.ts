@@ -1,10 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import type { UserEntity } from './user.entity.js';
-import type { UserRepository } from './user.repository.js';
+import { UserRepository } from './user.repository.js';
 
 @Injectable()
 export class UserService {
-	constructor(private readonly userRepository: UserRepository) {}
+	constructor(
+		@Inject(forwardRef(() => UserRepository))
+		private readonly userRepository: UserRepository,
+	) {}
 
 	findOneByUsername(username: string): Promise<UserEntity | null> {
 		return this.userRepository.findOneByUsername(username);

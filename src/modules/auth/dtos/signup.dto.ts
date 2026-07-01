@@ -38,7 +38,9 @@ export class SignupDto {
 	declare identifier: string;
 
 	@IsString()
-	@IsStrongPassword()
+	@IsStrongPassword({
+		minSymbols: 0,
+	})
 	declare password: string;
 
 	@IsString()
