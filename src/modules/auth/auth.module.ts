@@ -5,6 +5,7 @@ import { UserEntity } from '#modules/user/user.entity.js';
 import { UserModule } from '#modules/user/user.module.js';
 import { AuthController } from './auth.controller.js';
 import { AuthService } from './auth.service.js';
+import { SessionSerializer } from './session.serializer.js';
 import { LocalStrategy } from './strategies/local.strategy.js';
 
 @Module({
@@ -14,6 +15,6 @@ import { LocalStrategy } from './strategies/local.strategy.js';
 		PassportModule,
 	],
 	controllers: [AuthController],
-	providers: [AuthService, LocalStrategy],
+	providers: [AuthService, LocalStrategy, SessionSerializer],
 })
 export class AuthModule {}

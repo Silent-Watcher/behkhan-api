@@ -42,6 +42,16 @@ export class UserRepository {
 		return qb.getOne();
 	}
 
+	findOneById(
+		id: string | number,
+		projection?: Partial<Record<keyof UserEntity, boolean>>,
+	): Promise<UserEntity | null> {
+		return this.userRepository.findOne({
+			where: { id: +id },
+			select: projection,
+		});
+	}
+
 	save(user: UserEntity): Promise<UserEntity> {
 		return this.userRepository.save(user);
 	}

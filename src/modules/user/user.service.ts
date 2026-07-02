@@ -29,4 +29,11 @@ export class UserService {
 	): Promise<UserEntity | null> {
 		return this.userRepository.findOneByIdentifier(identifier, projection);
 	}
+
+	findOneById(
+		id: number | string,
+		projection?: Partial<Record<keyof UserEntity, boolean>>,
+	): Promise<UserEntity | null> {
+		return this.userRepository.findOneById(id, projection);
+	}
 }

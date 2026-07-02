@@ -14,6 +14,7 @@ import adminPanelConfig from './configs/admin-panel.config.js';
 import databaseConfig from './configs/database.config.js';
 import { configModuleOptions } from './configs/index.js';
 import pinoConfig from './configs/pino.config.js';
+import { BlockAuthenticated } from './common/guards/block-authenticated.guard.js';
 
 @Module({
 	imports: [
@@ -44,6 +45,10 @@ import pinoConfig from './configs/pino.config.js';
 		{
 			provide: APP_GUARD,
 			useClass: ProtectedGuard,
+		},
+		{
+			provide: APP_GUARD,
+			useClass: BlockAuthenticated,
 		},
 	],
 })

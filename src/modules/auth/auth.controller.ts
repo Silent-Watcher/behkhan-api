@@ -8,8 +8,8 @@ import {
 	Req,
 	UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import type { Request } from 'express';
+import { Public } from '../../common/decorators/public.decorator.js';
 import { AuthService } from './auth.service.js';
 // biome-ignore lint/style/useImportType: <we need to emit some metadata for our dto>
 import { SignupDto } from './dtos/signup.dto.js';
@@ -22,6 +22,7 @@ export class AuthController {
 		private readonly authService: AuthService,
 	) {}
 
+	@Public()
 	@Post('signup')
 	async signup(@Body() signupDto: SignupDto, @Req() req: Request) {
 		const user = await this.authService.signup(signupDto);
@@ -33,6 +34,7 @@ export class AuthController {
 		return { data: user, message: 'Successfull!' };
 	}
 
+	@Public()
 	@UseGuards(LocalAuthGuard)
 	@Post('signin')
 	signin(@Req() req: Request) {

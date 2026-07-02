@@ -31,6 +31,7 @@ export class AuthService {
 			{ id: true },
 		);
 
+		console.log('userExists: ', userExists);
 		if (userExists) {
 			throw new ConflictException(
 				'A user with this identifier already exists.',
@@ -44,6 +45,7 @@ export class AuthService {
 		newUser = this.applyIdentifier(newUser, identifier);
 
 		const user = await this.userService.save(newUser);
+		console.log('user: ', user);
 		return user;
 	}
 
