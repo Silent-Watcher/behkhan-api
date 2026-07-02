@@ -1,7 +1,7 @@
 import {
-	Injectable,
 	type CanActivate,
 	type ExecutionContext,
+	Injectable,
 } from '@nestjs/common';
 // biome-ignore lint/style/useImportType: <should emit some metadata for the reflector>
 import { Reflector } from '@nestjs/core';

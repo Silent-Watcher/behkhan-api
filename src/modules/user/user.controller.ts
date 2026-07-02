@@ -10,7 +10,7 @@ export class UserController {
 	) {}
 
 	@Get()
-	whoami(@Req() req: Request) {
+	getCurrent(@Req() req: Request) {
 		return { data: req.user, message: 'current user' };
 	}
 }
