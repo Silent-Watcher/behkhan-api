@@ -1,4 +1,5 @@
-import { promisify } from 'node:util';
+import { GuestOnly } from '#decorators/guest-only.decorator.js';
+import { Public } from '#decorators/public.decorator.js';
 import {
 	Body,
 	Controller,
@@ -9,8 +10,7 @@ import {
 	UseGuards,
 } from '@nestjs/common';
 import type { Request } from 'express';
-import { BlockIfAuthenticated } from '#decorators/block-if-authenticated.decorator.js';
-import { Public } from '#decorators/public.decorator.js';
+import { promisify } from 'node:util';
 import { AuthService } from './auth.service.js';
 // biome-ignore lint/style/useImportType: <we need to emit some metadata for our dto>
 import { SignupDto } from './dtos/signup.dto.js';
@@ -23,8 +23,7 @@ export class AuthController {
 		private readonly authService: AuthService,
 	) {}
 
-	@Public()
-	@BlockIfAuthenticated()
+	@GuestOnly()
 	@Post('signup')
 	async signup(@Body() signupDto: SignupDto, @Req() req: Request) {
 		const user = await this.authService.signup(signupDto);
@@ -36,15 +35,13 @@ export class AuthController {
 		return { data: user, message: 'Successfull!' };
 	}
 
-	@Public()
-	@BlockIfAuthenticated()
+	@GuestOnly()
 	@UseGuards(LocalAuthGuard)
 	@Post('signin')
 	signin(@Req() req: Request) {
 		return { data: req.user, message: 'Successfull!' };
 	}
 
-	// TODO: add block if authenticated guard
 	@Post('/logout')
 	async logout(@Req() req: Request) {
 		const logout = promisify(req.logout.bind(req));

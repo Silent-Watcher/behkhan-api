@@ -9,7 +9,7 @@ import { AuthModule } from '#modules/auth/auth.module.js';
 import { UserEntity } from '#modules/user/user.entity.js';
 import { UserModule } from '#modules/user/user.module.js';
 import { AppController } from './app.controller.js';
-import { BlockAuthenticated } from './common/guards/block-authenticated.guard.js';
+import { GuestOnlyGuard } from './common/guards/guest-only.guard.js';
 import { ProtectedGuard } from './common/guards/protected.guard.js';
 import adminPanelConfig from './configs/admin-panel.config.js';
 import databaseConfig from './configs/database.config.js';
@@ -48,7 +48,7 @@ import pinoConfig from './configs/pino.config.js';
 		},
 		{
 			provide: APP_GUARD,
-			useClass: BlockAuthenticated,
+			useClass: GuestOnlyGuard,
 		},
 	],
 })
