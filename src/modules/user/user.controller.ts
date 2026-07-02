@@ -1,8 +1,8 @@
 import { Controller, forwardRef, Get, Inject, Req } from '@nestjs/common';
-import { UserService } from './user.service.js';
 import type { Request } from 'express';
+import { UserService } from './user.service.js';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
 	constructor(
 		@Inject(forwardRef(() => UserService))
@@ -11,6 +11,6 @@ export class UserController {
 
 	@Get()
 	whoami(@Req() req: Request) {
-		return req.user;
+		return { data: req.user, message: 'current user' };
 	}
 }

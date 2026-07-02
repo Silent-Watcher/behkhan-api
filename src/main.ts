@@ -11,6 +11,7 @@ import { setupSession } from './bootstrap/setup-session.js';
 import { setupStartupLogs } from './bootstrap/setup-startup-logs.js';
 import { setupSwagger } from './bootstrap/setup-swagger.js';
 import type { HttpConfig } from './configs/http.config.js';
+import { setupPassport } from '#bootstrap/setup-passport.js';
 
 async function bootstrap() {
 	setupEnv();
@@ -36,6 +37,9 @@ async function bootstrap() {
 	setupSwagger(app);
 
 	app.useGlobalPipes(new ValidationPipe({}));
+
+	setupPassport(app);
+
 	await app.listen(port, host, () => {});
 }
 bootstrap();
