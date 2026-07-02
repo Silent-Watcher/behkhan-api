@@ -1,0 +1,18 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./src:/usr/src/app/src
+      - ./package.json:/usr/src/app/package.json
+      - ./tsconfig.json:/usr/src/app/tsconfig.json
+      - /usr/src/app/node_modules
+    env_file:
+      - ./env/.env.development
+    environment:
+      - NODE_ENV=development
+    command: npm run start:dev
+

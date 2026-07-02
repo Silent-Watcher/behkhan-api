@@ -16,7 +16,7 @@ WORKDIR /usr/src/app
 COPY --from=deps /usr/src/app/node_modules ./node_modules
 COPY . .
 
-RUN npm run build && npm prune --omit=dev
+RUN npm run build &&  npm ci --omit=dev
 
 # ---- Stage 3
 FROM node:24-alpine AS production
