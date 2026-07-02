@@ -9,12 +9,12 @@ import { AuthModule } from '#modules/auth/auth.module.js';
 import { UserEntity } from '#modules/user/user.entity.js';
 import { UserModule } from '#modules/user/user.module.js';
 import { AppController } from './app.controller.js';
+import { BlockAuthenticated } from './common/guards/block-authenticated.guard.js';
 import { ProtectedGuard } from './common/guards/protected.guard.js';
 import adminPanelConfig from './configs/admin-panel.config.js';
 import databaseConfig from './configs/database.config.js';
 import { configModuleOptions } from './configs/index.js';
 import pinoConfig from './configs/pino.config.js';
-import { BlockAuthenticated } from './common/guards/block-authenticated.guard.js';
 
 @Module({
 	imports: [

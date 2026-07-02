@@ -14,6 +14,7 @@ import { AuthService } from './auth.service.js';
 // biome-ignore lint/style/useImportType: <we need to emit some metadata for our dto>
 import { SignupDto } from './dtos/signup.dto.js';
 import { LocalAuthGuard } from './guards/local-auth.guard.js';
+import { BlockIfAuthenticated } from '../../common/decorators/block-if-authenticated.decorator.js';
 
 @Controller('auth')
 export class AuthController {
@@ -23,6 +24,7 @@ export class AuthController {
 	) {}
 
 	@Public()
+	@BlockIfAuthenticated()
 	@Post('signup')
 	async signup(@Body() signupDto: SignupDto, @Req() req: Request) {
 		const user = await this.authService.signup(signupDto);
@@ -35,6 +37,7 @@ export class AuthController {
 	}
 
 	@Public()
+	@BlockIfAuthenticated()
 	@UseGuards(LocalAuthGuard)
 	@Post('signin')
 	signin(@Req() req: Request) {
@@ -44,8 +47,9 @@ export class AuthController {
 	// TODO: add block if authenticated guard
 	@Post('/logout')
 	async logout(@Req() req: Request) {
-		return req.logOut({}, (err) => {
-			throw err;
-		});
+		const logout = promisify(req.logout.bind(req));
+		await logout();
+
+		return { message: 'Successfull' };
 	}
 }
