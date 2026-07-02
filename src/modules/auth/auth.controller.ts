@@ -1,5 +1,4 @@
-import { GuestOnly } from '#decorators/guest-only.decorator.js';
-import { Public } from '#decorators/public.decorator.js';
+import { promisify } from 'node:util';
 import {
 	Body,
 	Controller,
@@ -10,7 +9,8 @@ import {
 	UseGuards,
 } from '@nestjs/common';
 import type { Request } from 'express';
-import { promisify } from 'node:util';
+import { GuestOnly } from '#decorators/guest-only.decorator.js';
+import { Public } from '#decorators/public.decorator.js';
 import { AuthService } from './auth.service.js';
 // biome-ignore lint/style/useImportType: <we need to emit some metadata for our dto>
 import { SignupDto } from './dtos/signup.dto.js';
@@ -23,6 +23,7 @@ export class AuthController {
 		private readonly authService: AuthService,
 	) {}
 
+	@Public()
 	@GuestOnly()
 	@Post('signup')
 	async signup(@Body() signupDto: SignupDto, @Req() req: Request) {
@@ -35,6 +36,7 @@ export class AuthController {
 		return { data: user, message: 'Successfull!' };
 	}
 
+	@Public()
 	@GuestOnly()
 	@UseGuards(LocalAuthGuard)
 	@Post('signin')

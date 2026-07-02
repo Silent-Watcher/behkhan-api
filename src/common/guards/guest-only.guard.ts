@@ -1,9 +1,9 @@
-import { GuestOnly } from '#decorators/guest-only.decorator.js';
 import type { CanActivate, ExecutionContext } from '@nestjs/common';
 import { ForbiddenException, Injectable } from '@nestjs/common';
 // biome-ignore lint/style/useImportType: <should emit some metadata for the reflector>
 import { Reflector } from '@nestjs/core';
 import type { Request } from 'express';
+import { GuestOnly } from '#decorators/guest-only.decorator.js';
 
 @Injectable()
 export class GuestOnlyGuard implements CanActivate {
