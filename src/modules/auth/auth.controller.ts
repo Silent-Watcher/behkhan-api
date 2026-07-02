@@ -9,12 +9,12 @@ import {
 	UseGuards,
 } from '@nestjs/common';
 import type { Request } from 'express';
-import { Public } from '../../common/decorators/public.decorator.js';
+import { BlockIfAuthenticated } from '#decorators/block-if-authenticated.decorator.js';
+import { Public } from '#decorators/public.decorator.js';
 import { AuthService } from './auth.service.js';
 // biome-ignore lint/style/useImportType: <we need to emit some metadata for our dto>
 import { SignupDto } from './dtos/signup.dto.js';
 import { LocalAuthGuard } from './guards/local-auth.guard.js';
-import { BlockIfAuthenticated } from '../../common/decorators/block-if-authenticated.decorator.js';
 
 @Controller('auth')
 export class AuthController {

@@ -86,6 +86,7 @@
 		"#enums/*": "./dist/common/enums/*",
 		"#constants/*": "./dist/common/constants/*",
 		"#regex/*": "./dist/common/regex/*",
+		"#decorators/*": "./dist/common/decorators/*",
 		"#modules/*": "./dist/modules/*",
 		"#database/*": "./dist/database/*",
 		"#bootstrap/*": "./dist/bootstrap/*"

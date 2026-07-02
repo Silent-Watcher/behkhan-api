@@ -28,7 +28,8 @@
 			"#regex/*": ["./src/common/regex/*"],
 			"#modules/*": ["./src/modules/*"],
 			"#database/*": ["./src/database/*"],
-			"#bootstrap/*": ["./src/bootstrap/*"]
+			"#bootstrap/*": ["./src/bootstrap/*"],
+			"#decorators/*": ["./src/common/decorators/*"]
 		}
 	}
 }
