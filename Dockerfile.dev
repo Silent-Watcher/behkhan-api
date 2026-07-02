@@ -1,17 +1,17 @@
 FROM node:24-alpine
+RUN addgroup -S nodejs && adduser -S nodeuser -G nodejs
 
-# Only when you actually depend on native addons (bcrypt, sharp, etc.)
-RUN apk add --no-cache python3 make g++
+# # Only when you actually depend on native addons (bcrypt, sharp, etc.)
+# RUN apk add --no-cache python3 make g++
 
 WORKDIR /usr/src/app
 
-COPY package.json package-lock.json ./
+COPY --chown=nodeuser:nodejs package.json package-lock.json ./
 
 RUN npm ci
 
-COPY . .
+COPY --chown=nodeuser:nodejs . .
 
-RUN addgroup -S nodejs && adduser -S nodeuser -G nodejs
 USER nodeuser
 
 EXPOSE 8080
