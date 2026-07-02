@@ -1,0 +1,22 @@
+FROM node:24-alpine
+
+# Only when you actually depend on native addons (bcrypt, sharp, etc.)
+RUN apk add --no-cache python3 make g++
+
+WORKDIR /usr/src/app
+
+COPY package.json package-lock.json ./
+
+ENV HUSKY=0
+RUN npm ci
+
+COPY . .
+
+RUN addgroup -S nodejs && adduser -S nodeuser -G nodejs
+USER nodeuser
+
+EXPOSE 8080
+
+CMD ["npm", "run", "start:dev"]
+
+
