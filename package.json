@@ -11,9 +11,9 @@
 	"scripts": {
 		"build": "nest build",
 		"start": "nest --env-file=./env/.env.production start -b swc",
-		"start:dev": "nest --env-file=./env/.env.development start -b swc -w",
+		"start:dev": "nest start -b swc -w",
 		"start:debug": "nest start --debug --watch",
-		"start:prod": "node --env-file=./env/.env.production dist/main",
+		"start:prod": "node dist/main",
 		"check": "npx @biomejs/biome check --write",
 		"test": "jest",
 		"test:watch": "jest --watch",
