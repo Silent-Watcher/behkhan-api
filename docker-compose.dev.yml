@@ -1,18 +1,31 @@
 services:
-  api:
+  app:
     build:
       context: .
       dockerfile: Dockerfile.dev
     ports:
       - "8080:8080"
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    env_file:
+      - env/.env.development
+    environment:
+      - NODE_ENV=development
     volumes:
       - ./src:/usr/src/app/src
       - ./package.json:/usr/src/app/package.json
+      - ./package-lock.json:/usr/src/app/package-lock.json
       - ./tsconfig.json:/usr/src/app/tsconfig.json
+      - ./nest-cli.json:/usr/src/app/nest-cli.json
       - /usr/src/app/node_modules
-    env_file:
-      - ./env/.env.development
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    shm_size: 128mb
+    restart: always
     environment:
-      - NODE_ENV=development
-    command: npm run start:dev
-
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      POSTGRES_DB: behkhaan

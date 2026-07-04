@@ -7,6 +7,8 @@ dist
 .env
 .env.*
 !.env.example
+env
+!env/.env.example
 *.md
 .vscode
 .idea
