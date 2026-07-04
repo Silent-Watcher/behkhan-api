@@ -41,8 +41,7 @@ export class AuthController {
 	@GuestOnly()
 	@Post('signin')
 	async signin(@Req() req: Request) {
-
-        const login = promisify(req.login.bind(req));
+		const login = promisify(req.login.bind(req));
 		await login(req.user);
 
 		return { data: req.user, message: 'Successfull!' };
