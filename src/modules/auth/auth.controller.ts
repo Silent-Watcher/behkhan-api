@@ -37,10 +37,14 @@ export class AuthController {
 	}
 
 	@Public()
-	@GuestOnly()
 	@UseGuards(LocalAuthGuard)
+	@GuestOnly()
 	@Post('signin')
-	signin(@Req() req: Request) {
+	async signin(@Req() req: Request) {
+
+        const login = promisify(req.login.bind(req));
+		await login(req.user);
+
 		return { data: req.user, message: 'Successfull!' };
 	}
 

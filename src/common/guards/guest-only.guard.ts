@@ -3,7 +3,7 @@ import { ForbiddenException, Injectable } from '@nestjs/common';
 // biome-ignore lint/style/useImportType: <should emit some metadata for the reflector>
 import { Reflector } from '@nestjs/core';
 import type { Request } from 'express';
-import { GuestOnly } from '#decorators/guest-only.decorator.js';
+import { IS_GUEST_ONLY } from '#decorators/guest-only.decorator.js';
 
 @Injectable()
 export class GuestOnlyGuard implements CanActivate {
@@ -11,15 +11,19 @@ export class GuestOnlyGuard implements CanActivate {
 
 	canActivate(context: ExecutionContext): boolean {
 		const isGuestOnly = this.reflector.getAllAndOverride<boolean>(
-			GuestOnly,
+			IS_GUEST_ONLY,
 			[context.getHandler(), context.getClass()],
 		);
+
+		console.log('inside guest only');
+		console.log('isGuestOnly: ', isGuestOnly);
 
 		if (!isGuestOnly) {
 			return true;
 		}
 
 		const req = context.switchToHttp().getRequest<Request>();
+		console.log('req.isAuthenticated(): ', req.isAuthenticated());
 
 		if (req.isAuthenticated()) {
 			throw new ForbiddenException(

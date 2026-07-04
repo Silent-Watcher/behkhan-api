@@ -8,7 +8,7 @@
 			"options": {
 				"swcrcPath": "./.swcrc"
 			},
-      "stripLeadingPaths": true
+			"stripLeadingPaths": true
 		},
 		"deleteOutDir": true,
 		"typeCheck": true

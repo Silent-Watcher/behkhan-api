@@ -24,6 +24,7 @@ export class ProtectedGuard implements CanActivate {
 		if (isPublic) return true;
 
 		const request = context.switchToHttp().getRequest<Request>();
+        console.log('request.isAuthenticated(): ', request.isAuthenticated());
 		return request.isAuthenticated();
 	}
 }
