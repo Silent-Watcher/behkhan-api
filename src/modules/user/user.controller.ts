@@ -9,8 +9,8 @@ export class UserController {
 		private readonly userService: UserService,
 	) {}
 
-	@Get()
+	@Get('/current')
 	getCurrent(@Req() req: Request) {
-		return { data: req.user, message: 'current user' };
+		return { user: req.user, message: 'current user' };
 	}
 }

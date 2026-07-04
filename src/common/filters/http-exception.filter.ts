@@ -1,15 +1,17 @@
 import { STATUS_CODES } from 'node:http';
 import {
-	ArgumentsHost,
-	ExceptionFilter,
+	type ArgumentsHost,
+	Catch,
+	type ExceptionFilter,
 	HttpException,
+	HttpStatus,
 } from '@nestjs/common';
-import { Catch, HttpStatus } from '@nestjs/common';
 import type { Request, Response } from 'express';
 import {
 	API_DEFAULT_VERSION,
 	API_MEDIA_TYPE_VERSIONING_PAIR_SEPERATOR,
 } from '#constants/app.js';
+import type { ApiResponse } from '#interfaces/api-response.interface.js';
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter<HttpException> {
@@ -25,15 +27,17 @@ export class HttpExceptionFilter implements ExceptionFilter<HttpException> {
 			? (exception.message ?? exception.name)
 			: STATUS_CODES[HttpStatus.INTERNAL_SERVER_ERROR];
 
-		response.status(status).json({
-			id: request.id,
+		const responseBody: ApiResponse = {
+			requestId: request.id,
 			statusCode: status,
 			message,
 			method: request.method,
 			path: request.path,
 			apiVersion: `v${apiVersion}`,
 			timestamp: new Date().toISOString(),
-		});
+		};
+
+		response.status(status).json(responseBody);
 	}
 
 	private getApiVersionFromAcceptHeader(req: Request): number {

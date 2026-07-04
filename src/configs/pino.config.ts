@@ -5,8 +5,8 @@ import { isNonProduction } from '#constants/environment.js';
 
 type PinoLoggerOptions = Params;
 
-import _env from '../bootstrap/setup-env.js';
 import { randomUUID } from 'node:crypto';
+import _env from '../bootstrap/setup-env.js';
 
 export default registerAs(
 	'pino',

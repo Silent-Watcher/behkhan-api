@@ -28,7 +28,8 @@
 			"#modules/*": ["./src/modules/*"],
 			"#database/*": ["./src/database/*"],
 			"#bootstrap/*": ["./src/bootstrap/*"],
-			"#decorators/*": ["./src/common/decorators/*"]
+			"#decorators/*": ["./src/common/decorators/*"],
+			"#interfaces/*": ["./src/interfaces/*"]
 		}
 	}
 }

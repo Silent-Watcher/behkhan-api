@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import type { ConfigType } from '@nestjs/config';
 import { ConfigModule } from '@nestjs/config';
-import { APP_FILTER, APP_GUARD } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from 'pino-nestjs';
 import { isDevelopment } from '#constants/environment.js';
@@ -10,13 +10,14 @@ import { SessionEntitiy } from '#modules/session/session.entity.js';
 import { UserEntity } from '#modules/user/user.entity.js';
 import { UserModule } from '#modules/user/user.module.js';
 import { AppController } from './app.controller.js';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter.js';
 import { GuestOnlyGuard } from './common/guards/guest-only.guard.js';
 import { ProtectedGuard } from './common/guards/protected.guard.js';
 import adminPanelConfig from './configs/admin-panel.config.js';
 import databaseConfig from './configs/database.config.js';
 import { configModuleOptions } from './configs/index.js';
 import pinoConfig from './configs/pino.config.js';
-import { HttpExceptionFilter } from './common/filters/http-exception.filter.js';
+import { ResponseInterceptor } from './common/interceptors/response.interceptor.js';
 
 @Module({
 	imports: [
@@ -55,6 +56,10 @@ import { HttpExceptionFilter } from './common/filters/http-exception.filter.js';
 		{
 			provide: APP_FILTER,
 			useClass: HttpExceptionFilter,
+		},
+		{
+			provide: APP_INTERCEPTOR,
+			useClass: ResponseInterceptor,
 		},
 	],
 })
