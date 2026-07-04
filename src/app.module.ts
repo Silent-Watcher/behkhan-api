@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import type { ConfigType } from '@nestjs/config';
 import { ConfigModule } from '@nestjs/config';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from 'pino-nestjs';
 import { isDevelopment } from '#constants/environment.js';
@@ -16,6 +16,7 @@ import adminPanelConfig from './configs/admin-panel.config.js';
 import databaseConfig from './configs/database.config.js';
 import { configModuleOptions } from './configs/index.js';
 import pinoConfig from './configs/pino.config.js';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter.js';
 
 @Module({
 	imports: [
@@ -50,6 +51,10 @@ import pinoConfig from './configs/pino.config.js';
 		{
 			provide: APP_GUARD,
 			useClass: GuestOnlyGuard,
+		},
+		{
+			provide: APP_FILTER,
+			useClass: HttpExceptionFilter,
 		},
 	],
 })

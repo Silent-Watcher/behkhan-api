@@ -6,6 +6,7 @@ import {
 	Inject,
 	Post,
 	Req,
+	UseFilters,
 	UseGuards,
 } from '@nestjs/common';
 import type { Request } from 'express';
@@ -15,6 +16,7 @@ import { AuthService } from './auth.service.js';
 // biome-ignore lint/style/useImportType: <we need to emit some metadata for our dto>
 import { SignupDto } from './dtos/signup.dto.js';
 import { LocalAuthGuard } from './guards/local-auth.guard.js';
+import { HttpExceptionFilter } from '../../common/filters/http-exception.filter.js';
 
 @Controller('auth')
 export class AuthController {
