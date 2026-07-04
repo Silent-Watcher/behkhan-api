@@ -13,11 +13,11 @@ import { AppController } from './app.controller.js';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter.js';
 import { GuestOnlyGuard } from './common/guards/guest-only.guard.js';
 import { ProtectedGuard } from './common/guards/protected.guard.js';
+import { ResponseInterceptor } from './common/interceptors/response.interceptor.js';
 import adminPanelConfig from './configs/admin-panel.config.js';
 import databaseConfig from './configs/database.config.js';
 import { configModuleOptions } from './configs/index.js';
 import pinoConfig from './configs/pino.config.js';
-import { ResponseInterceptor } from './common/interceptors/response.interceptor.js';
 
 @Module({
 	imports: [

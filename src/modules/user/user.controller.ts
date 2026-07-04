@@ -1,6 +1,7 @@
-import { Controller, forwardRef, Get, Inject, Req } from '@nestjs/common';
-import type { Request } from 'express';
+import { Controller, forwardRef, Get, Inject } from '@nestjs/common';
 import { UserService } from './user.service.js';
+import { User } from './user.decorator.js';
+import type { UserEntity } from './user.entity.js';
 
 @Controller('users')
 export class UserController {
@@ -10,7 +11,7 @@ export class UserController {
 	) {}
 
 	@Get('/current')
-	getCurrent(@Req() req: Request) {
-		return { user: req.user, message: 'current user' };
+	getCurrent(@User() user: UserEntity) {
+		return { user, message: 'current user' };
 	}
 }
