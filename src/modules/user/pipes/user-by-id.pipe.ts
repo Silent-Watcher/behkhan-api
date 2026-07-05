@@ -23,13 +23,8 @@ export class UserByIdPipe
 		if (Number.isNaN(Number(value))) {
 			throw new BadRequestException('Invalid user id format');
 		}
-
 		const user = await this.userService.findOneById(+value);
-
-		if (!user) {
-			throw new NotFoundException('user not found');
-		}
-
+		if (!user) throw new NotFoundException('user not found');
 		return user;
 	}
 }

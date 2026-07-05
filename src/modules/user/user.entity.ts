@@ -1,5 +1,6 @@
-import { Column, Entity, Index } from 'typeorm';
+import { Column, Entity, Index, ManyToMany } from 'typeorm';
 import { AbstractEntity } from '#database/entities/abstract.entity.js';
+import { AchievementEntity } from '#modules/achievement/achievement.entity.js';
 
 @Entity({ name: 'users' })
 export class UserEntity extends AbstractEntity {
@@ -42,4 +43,35 @@ export class UserEntity extends AbstractEntity {
 		nullable: true,
 	})
 	declare displayName: string | null;
+
+	@Column({
+		type: 'varchar',
+		length: 255,
+		nullable: true,
+	})
+	declare bio: string | null;
+
+	@Column({
+		type: 'integer',
+		default: 0,
+		unsigned: true,
+	})
+	declare followersCount: number;
+
+	@Column({
+		type: 'integer',
+		default: 0,
+		unsigned: true,
+	})
+	declare followingCount: number;
+
+	@Column({
+		type: 'integer',
+		default: 0,
+		unsigned: true,
+	})
+	declare xpCount: number;
+
+	@ManyToMany(() => AchievementEntity)
+	declare achievements: (AchievementEntity | null)[];
 }

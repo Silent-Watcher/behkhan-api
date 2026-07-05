@@ -29,6 +29,7 @@
 			"#database/*": ["./src/database/*"],
 			"#bootstrap/*": ["./src/bootstrap/*"],
 			"#decorators/*": ["./src/common/decorators/*"],
+			"#guards/*": ["./src/common/guards/*"],
 			"#interfaces/*": ["./src/interfaces/*"]
 		}
 	}

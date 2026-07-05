@@ -39,6 +39,7 @@
 		"connect-typeorm": "^2.0.0",
 		"express-formidable": "^1.2.0",
 		"express-session": "^1.19.0",
+		"fast-json-patch": "^3.1.1",
 		"helmet": "^8.2.0",
 		"passport": "^0.7.0",
 		"passport-local": "^1.0.0",
@@ -83,7 +84,8 @@
 		"#decorators/*": "./dist/common/decorators/*",
 		"#modules/*": "./dist/modules/*",
 		"#database/*": "./dist/database/*",
-		"#bootstrap/*": "./dist/bootstrap/*"
+		"#bootstrap/*": "./dist/bootstrap/*",
+		"#guards/*": "./dist/common/guards/*"
 	},
 	"allowScripts": {
 		"unrs-resolver@1.12.2": true,
