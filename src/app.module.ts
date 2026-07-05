@@ -12,6 +12,7 @@ import { AuthModule } from '#modules/auth/auth.module.js';
 import { SessionEntitiy } from '#modules/session/session.entity.js';
 import { UserEntity } from '#modules/user/user.entity.js';
 import { UserModule } from '#modules/user/user.module.js';
+import { UtilModule } from '#modules/util/util.module.js';
 import { AppController } from './app.controller.js';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter.js';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor.js';
@@ -44,6 +45,7 @@ import pinoConfig from './configs/pino.config.js';
 		UserModule,
 		AuthModule,
 		AchievementModule,
+		UtilModule,
 	],
 	controllers: [AppController],
 	providers: [

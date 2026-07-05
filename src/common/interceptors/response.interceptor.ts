@@ -13,9 +13,12 @@ import {
 	API_REQUEST_TIMEOUT_MS,
 } from '#constants/app.js';
 import type { ApiResponse } from '#interfaces/api-response.interface.js';
+import type { ApiUtilService } from '#modules/util/api-util.service.js';
 
 @Injectable()
 export class ResponseInterceptor implements NestInterceptor {
+	constructor(private readonly apiUtilService: ApiUtilService) {}
+
 	intercept(
 		context: ExecutionContext,
 		next: CallHandler<any>,
@@ -24,7 +27,8 @@ export class ResponseInterceptor implements NestInterceptor {
 		const response = context.switchToHttp().getResponse<Response>();
 
 		const startTime = Date.now();
-		const apiVersion = this.getApiVersionFromAcceptHeader(request);
+		const apiVersion =
+			this.apiUtilService.getApiVersionFromAcceptHeader(request);
 
 		return next.handle().pipe(
 			timeout(API_REQUEST_TIMEOUT_MS),
@@ -87,14 +91,5 @@ export class ResponseInterceptor implements NestInterceptor {
 	) {
 		const { message, ...data } = responseData;
 		return data;
-	}
-
-	private getApiVersionFromAcceptHeader(req: Request): number {
-		const acceptHeader = req.headers.accept;
-		const version = acceptHeader?.split(
-			API_MEDIA_TYPE_VERSIONING_PAIR_SEPERATOR,
-		)[1];
-		if (!version) return Number(API_DEFAULT_VERSION);
-		return Number(version);
 	}
 }

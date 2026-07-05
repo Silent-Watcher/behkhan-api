@@ -1,27 +1,31 @@
 import { STATUS_CODES } from 'node:http';
+import type { ArgumentsHost, ExceptionFilter } from '@nestjs/common';
 import {
-	type ArgumentsHost,
 	Catch,
-	type ExceptionFilter,
+	forwardRef,
 	HttpException,
 	HttpStatus,
+	Inject,
 } from '@nestjs/common';
 import type { Request, Response } from 'express';
-import {
-	API_DEFAULT_VERSION,
-	API_MEDIA_TYPE_VERSIONING_PAIR_SEPERATOR,
-} from '#constants/app.js';
 import type { ApiResponse } from '#interfaces/api-response.interface.js';
+import { ApiUtilService } from '#modules/util/api-util.service.js';
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter<HttpException> {
+	constructor(
+		@Inject(forwardRef(() => ApiUtilService))
+		private readonly apiUtilService: ApiUtilService,
+	) {}
+
 	catch(exception: HttpException, host: ArgumentsHost) {
 		const ctx = host.switchToHttp();
 		const response = ctx.getResponse<Response>();
 		const request = ctx.getRequest<Request>();
 
 		const status = exception.getStatus();
-		const apiVersion = this.getApiVersionFromAcceptHeader(request);
+		const apiVersion =
+			this.apiUtilService.getApiVersionFromAcceptHeader(request);
 
 		const message = status.toString().startsWith('4')
 			? (exception.message ?? exception.name)
@@ -38,14 +42,5 @@ export class HttpExceptionFilter implements ExceptionFilter<HttpException> {
 		};
 
 		response.status(status).json(responseBody);
-	}
-
-	private getApiVersionFromAcceptHeader(req: Request): number {
-		const acceptHeader = req.headers.accept;
-		const version = acceptHeader?.split(
-			API_MEDIA_TYPE_VERSIONING_PAIR_SEPERATOR,
-		)[1];
-		if (!version) return Number(API_DEFAULT_VERSION);
-		return Number(version);
 	}
 }
