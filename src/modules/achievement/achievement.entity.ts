@@ -1,8 +1,8 @@
+import { Column, Entity, Index, JoinTable, ManyToMany } from 'typeorm';
 import { AbstractEntity } from '#database/entities/abstract.entity.js';
 import { UserEntity } from '#modules/user/user.entity.js';
-import { Column, Entity, Index, JoinTable, ManyToMany } from 'typeorm';
 
-@Entity()
+@Entity('achievements')
 export class AchievementEntity extends AbstractEntity {
 	@Index()
 	@Column({
@@ -14,9 +14,10 @@ export class AchievementEntity extends AbstractEntity {
 	declare name: string;
 
 	@Column({
-		type: 'int64',
+		type: 'integer',
 		unsigned: true,
 		nullable: false,
+		unique: true,
 	})
 	declare minReadBookCount: number;
 

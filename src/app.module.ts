@@ -1,24 +1,24 @@
-import { isDevelopment } from '#constants/environment.js';
-import { AuthModule } from '#modules/auth/auth.module.js';
-import { SessionEntitiy } from '#modules/session/session.entity.js';
-import { UserEntity } from '#modules/user/user.entity.js';
-import { UserModule } from '#modules/user/user.module.js';
 import { Module } from '@nestjs/common';
 import type { ConfigType } from '@nestjs/config';
 import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from 'pino-nestjs';
-import { AppController } from './app.controller.js';
-import { HttpExceptionFilter } from './common/filters/http-exception.filter.js';
+import { isDevelopment } from '#constants/environment.js';
 import { GuestOnlyGuard } from '#guards/guest-only.guard.js';
 import { ProtectedGuard } from '#guards/protected.guard.js';
+import { AchievementModule } from '#modules/achievement/achievement.module.js';
+import { AuthModule } from '#modules/auth/auth.module.js';
+import { SessionEntitiy } from '#modules/session/session.entity.js';
+import { UserEntity } from '#modules/user/user.entity.js';
+import { UserModule } from '#modules/user/user.module.js';
+import { AppController } from './app.controller.js';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter.js';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor.js';
 import adminPanelConfig from './configs/admin-panel.config.js';
 import databaseConfig from './configs/database.config.js';
 import { configModuleOptions } from './configs/index.js';
 import pinoConfig from './configs/pino.config.js';
-import { AchievementModule } from '#modules/achievement/achievement.module.js';
 
 @Module({
 	imports: [
