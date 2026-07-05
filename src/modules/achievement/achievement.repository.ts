@@ -32,4 +32,14 @@ export class AchievementRepository {
 			select: projection,
 		});
 	}
+
+	findOneById(
+		id: number,
+		projection?: Partial<Record<keyof AchievementEntity, boolean>>,
+	): Promise<AchievementEntity | null> {
+		return this.achievementRepository.findOne({
+			where: [{ id }],
+			select: projection,
+		});
+	}
 }

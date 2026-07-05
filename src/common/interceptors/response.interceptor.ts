@@ -3,21 +3,25 @@ import type {
 	ExecutionContext,
 	NestInterceptor,
 } from '@nestjs/common';
-import { Injectable, RequestTimeoutException } from '@nestjs/common';
+import {
+	forwardRef,
+	Inject,
+	Injectable,
+	RequestTimeoutException,
+} from '@nestjs/common';
 import type { Request, Response } from 'express';
 import type { Observable } from 'rxjs';
 import { catchError, map, TimeoutError, throwError, timeout } from 'rxjs';
-import {
-	API_DEFAULT_VERSION,
-	API_MEDIA_TYPE_VERSIONING_PAIR_SEPERATOR,
-	API_REQUEST_TIMEOUT_MS,
-} from '#constants/app.js';
+import { API_REQUEST_TIMEOUT_MS } from '#constants/app.js';
 import type { ApiResponse } from '#interfaces/api-response.interface.js';
-import type { ApiUtilService } from '#modules/util/api-util.service.js';
+import { ApiUtilService } from '#modules/util/api-util.service.js';
 
 @Injectable()
 export class ResponseInterceptor implements NestInterceptor {
-	constructor(private readonly apiUtilService: ApiUtilService) {}
+	constructor(
+		@Inject(forwardRef(() => ApiUtilService))
+		private readonly apiUtilService: ApiUtilService,
+	) {}
 
 	intercept(
 		context: ExecutionContext,

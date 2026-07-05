@@ -2,13 +2,17 @@ import {
 	Body,
 	Controller,
 	forwardRef,
+	Get,
 	Inject,
 	InternalServerErrorException,
+	Param,
 	Post,
 } from '@nestjs/common';
 import { AchievementService } from './achievement.service.js';
 // biome-ignore lint/style/useImportType: <we need to emit some metadata for this type>
 import { CreateAchievementDto } from './dtos/create-achievement.dto.js';
+import { AchievementEntity } from './achievement.entity.js';
+import { AchievementByIdPipe } from './pipes/achievement-by-id.pipe.js';
 
 @Controller('achievements')
 export class AchievementController {
@@ -33,5 +37,10 @@ export class AchievementController {
 			message: 'Created!',
 			__location: `http:localhost:8080/api/achievements/${achievement.id}`,
 		};
+	}
+
+	@Get(':id')
+	async findOne(@Param('id', AchievementByIdPipe) achievement: AchievementEntity) {
+		return achievement;
 	}
 }

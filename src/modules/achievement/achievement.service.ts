@@ -51,4 +51,11 @@ export class AchievementService {
 			readBookCount,
 		);
 	}
+
+	findOneById(
+		id: number,
+		projection?: Partial<Record<keyof AchievementEntity, boolean>>,
+	): Promise<AchievementEntity | null> {
+		return this.achievementRepo.findOneById(id, projection);
+	}
 }
