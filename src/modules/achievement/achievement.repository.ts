@@ -42,4 +42,21 @@ export class AchievementRepository {
 			select: projection,
 		});
 	}
+
+	async patchOneById(id: number, patchData: AchievementEntity) {
+		const { minReadBookCount, name } = patchData;
+		const result = await this.achievementRepository
+			.createQueryBuilder()
+			.update(AchievementEntity)
+			.set({
+				name,
+				minReadBookCount,
+			})
+			.where('id = :id', { id })
+			.returning('*')
+			.execute();
+
+		const updated = result.raw[0];
+		return updated;
+	}
 }

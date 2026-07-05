@@ -1,4 +1,4 @@
-import { Transform, Type } from 'class-transformer';
+import { Expose, Transform, Type } from 'class-transformer';
 import {
 	IsInt,
 	IsNotEmpty,
@@ -13,6 +13,7 @@ import {
 } from '../achievement.constant.js';
 
 export class CreateAchievementDto {
+	@Expose()
 	@Transform(({ value }) =>
 		typeof value === 'string' ? value.trim().replace(/\s+/g, ' ') : value,
 	)
@@ -22,6 +23,7 @@ export class CreateAchievementDto {
 	@MaxLength(MAXIMUM_ACHIEVEMENT_NAME_LENGTH)
 	declare name: string;
 
+	@Expose()
 	@Type(() => Number)
 	@IsInt()
 	@Min(0)

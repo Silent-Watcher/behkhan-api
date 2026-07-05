@@ -6,12 +6,15 @@ import {
 	Inject,
 	InternalServerErrorException,
 	Param,
+	Patch,
 	Post,
 } from '@nestjs/common';
+import type { Operation } from 'fast-json-patch';
+import { JsonPatchValidationPipe } from '#pipes/json-patch-validation.pipe.js';
+import type { AchievementEntity } from './achievement.entity.js';
 import { AchievementService } from './achievement.service.js';
 // biome-ignore lint/style/useImportType: <we need to emit some metadata for this type>
 import { CreateAchievementDto } from './dtos/create-achievement.dto.js';
-import { AchievementEntity } from './achievement.entity.js';
 import { AchievementByIdPipe } from './pipes/achievement-by-id.pipe.js';
 
 @Controller('achievements')
@@ -40,7 +43,21 @@ export class AchievementController {
 	}
 
 	@Get(':id')
-	async findOne(@Param('id', AchievementByIdPipe) achievement: AchievementEntity) {
+	async findOne(
+		@Param('id', AchievementByIdPipe) achievement: AchievementEntity,
+	) {
 		return achievement;
+	}
+
+	@Patch(':id')
+	async patchOneById(
+		@Param('id', AchievementByIdPipe) achievement: AchievementEntity,
+		@Body(JsonPatchValidationPipe) patchData: Operation[],
+	) {
+		const result = await this.achievementService.patchOne(
+			achievement,
+			patchData,
+		);
+		return { achievement: result };
 	}
 }
