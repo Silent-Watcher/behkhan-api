@@ -13,6 +13,8 @@ import { setupSession } from './bootstrap/setup-session.js';
 import { setupStartupLogs } from './bootstrap/setup-startup-logs.js';
 import { setupSwagger } from './bootstrap/setup-swagger.js';
 import type { HttpConfig } from './configs/http.config.js';
+import cookieParser from 'cookie-parser';
+import { setupCookieParser } from '#bootstrap/setup-cookie-parser.js';
 
 async function bootstrap() {
 	setupEnv();
@@ -30,6 +32,7 @@ async function bootstrap() {
 	setupVersioning(app);
 
 	setupStartupLogs(logger);
+	setupCookieParser(app);
 	setupSession(app, sessionSecret);
 
 	app.useLogger(logger);
