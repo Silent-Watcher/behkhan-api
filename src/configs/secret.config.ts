@@ -10,5 +10,6 @@ export default registerAs(
 	(): SecretConfig =>
 		Object.freeze({
 			session: _env.SESSION_SECRET,
+			csrf: _env.CSRF_SECRET,
 		} as const),
 );

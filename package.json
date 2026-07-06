@@ -39,6 +39,7 @@
 		"class-validator": "^0.15.1",
 		"connect-typeorm": "^2.0.0",
 		"cookie-parser": "^1.4.7",
+		"csrf-csrf": "^4.0.3",
 		"express-formidable": "^1.2.0",
 		"express-session": "^1.19.0",
 		"fast-json-patch": "^3.1.1",

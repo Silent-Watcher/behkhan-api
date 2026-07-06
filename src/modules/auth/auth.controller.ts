@@ -1,18 +1,18 @@
 import { promisify } from 'node:util';
 import {
+	BadRequestException,
 	Body,
 	Controller,
 	forwardRef,
+	Get,
 	Inject,
 	Post,
 	Req,
-	UseFilters,
 	UseGuards,
 } from '@nestjs/common';
 import type { Request } from 'express';
 import { GuestOnly } from '#decorators/guest-only.decorator.js';
 import { Public } from '#decorators/public.decorator.js';
-import { HttpExceptionFilter } from '../../common/filters/http-exception.filter.js';
 import { AuthService } from './auth.service.js';
 // biome-ignore lint/style/useImportType: <we need to emit some metadata for our dto>
 import { SignupDto } from './dtos/signup.dto.js';
@@ -55,5 +55,16 @@ export class AuthController {
 		await logout();
 
 		return { message: 'Successfull' };
+	}
+
+	@Public()
+	@GuestOnly()
+	@Get('csrf')
+	getCsrfToken(@Req() req: Request) {
+		if (!req.csrfToken)
+			throw new BadRequestException('service unavailable');
+		const token = req.csrfToken();
+		console.log('token: ', token);
+		return { csrfToken: token  };
 	}
 }

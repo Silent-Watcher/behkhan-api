@@ -14,6 +14,7 @@ import { setupSession } from './bootstrap/setup-session.js';
 import { setupStartupLogs } from './bootstrap/setup-startup-logs.js';
 import { setupSwagger } from './bootstrap/setup-swagger.js';
 import type { HttpConfig } from './configs/http.config.js';
+import { setupCsrf } from '#bootstrap/setup-csrf.js';
 
 async function bootstrap() {
 	setupEnv();
@@ -23,19 +24,22 @@ async function bootstrap() {
 		infer: true,
 	});
 	const { port, host } = config.get<HttpConfig>('http', { infer: true });
-	const sessionSecret = config.get('secret.session', { infer: true });
+	// const sessionSecret = config.get('secret.session', { infer: true });
+	// const csrfSecret = config.get('secret.csrf', { infer: true });
+	const { csrf, session } = config.get('secret', { infer: true });
 	const allowedOrigins: Set<string> = new Set(origin);
 
 	const logger = app.get(Logger);
 
+	app.use(helmet());
 	setupVersioning(app);
 
 	setupStartupLogs(logger);
 	setupCookieParser(app);
-	setupSession(app, sessionSecret);
+	setupSession(app, session);
+	setupCsrf(app, csrf);
 
 	app.useLogger(logger);
-	app.use(helmet());
 	app.setGlobalPrefix('api');
 
 	setupCors(app, allowedOrigins, { credentials, maxAge });
