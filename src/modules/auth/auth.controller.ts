@@ -1,4 +1,3 @@
-import { promisify } from 'node:util';
 import {
 	BadRequestException,
 	Body,
@@ -6,6 +5,7 @@ import {
 	forwardRef,
 	Get,
 	Inject,
+	InternalServerErrorException,
 	Post,
 	Req,
 	UseGuards,
@@ -13,6 +13,11 @@ import {
 import type { Request } from 'express';
 import { GuestOnly } from '#decorators/guest-only.decorator.js';
 import { Public } from '#decorators/public.decorator.js';
+import {
+	loginUser,
+	logoutUser,
+	regenerateSession,
+} from '#helpers/auth.helper.js';
 import { AuthService } from './auth.service.js';
 // biome-ignore lint/style/useImportType: <we need to emit some metadata for our dto>
 import { SignupDto } from './dtos/signup.dto.js';
@@ -31,8 +36,8 @@ export class AuthController {
 	async signup(@Body() signupDto: SignupDto, @Req() req: Request) {
 		const user = await this.authService.signup(signupDto);
 
-		const login = promisify(req.login.bind(req));
-		await login(user);
+		await regenerateSession(req);
+		await loginUser(req, user);
 
 		// TODO: set Location response header
 		return { data: user, message: 'Successfull!' };
@@ -43,28 +48,29 @@ export class AuthController {
 	@GuestOnly()
 	@Post('signin')
 	async signin(@Req() req: Request) {
-		const login = promisify(req.login.bind(req));
-		await login(req.user);
+		const user = req.user;
 
-		return { data: req.user, message: 'Successfull!' };
+		if (!user)
+			throw new InternalServerErrorException('something went wront');
+
+		await regenerateSession(req);
+		await loginUser(req, user);
+
+		return { data: user, message: 'Successfull!' };
 	}
 
 	@Post('/logout')
 	async logout(@Req() req: Request) {
-		const logout = promisify(req.logout.bind(req));
-		await logout();
-
+		await logoutUser(req);
 		return { message: 'Successfull' };
 	}
 
 	@Public()
-	@GuestOnly()
 	@Get('csrf')
 	getCsrfToken(@Req() req: Request) {
 		if (!req.csrfToken)
 			throw new BadRequestException('service unavailable');
 		const token = req.csrfToken();
-		console.log('token: ', token);
-		return { csrfToken: token  };
+		return { csrfToken: token };
 	}
 }

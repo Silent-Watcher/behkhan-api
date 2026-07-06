@@ -1,8 +1,8 @@
-import { CSRF_TOKEN_HEADER } from '#constants/app.js';
-import { isProduction } from '#constants/environment.js';
 import type { INestApplication } from '@nestjs/common';
 import { doubleCsrf } from 'csrf-csrf';
 import type { Request } from 'express';
+import { CSRF_TOKEN_HEADER } from '#constants/app.js';
+import { isProduction } from '#constants/environment.js';
 
 export function setupCsrf(app: INestApplication, secret: string) {
 	const { doubleCsrfProtection } = doubleCsrf({

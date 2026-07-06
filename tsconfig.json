@@ -30,6 +30,7 @@
 			"#bootstrap/*": ["./src/bootstrap/*"],
 			"#decorators/*": ["./src/common/decorators/*"],
 			"#guards/*": ["./src/common/guards/*"],
+			"#helpers/*": ["./src/common/helpers/*"],
 			"#pipes/*": ["./src/common/pipes/*"],
 			"#interfaces/*": ["./src/interfaces/*"]
 		}

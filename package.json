@@ -90,6 +90,7 @@
 		"#database/*": "./dist/database/*",
 		"#bootstrap/*": "./dist/bootstrap/*",
 		"#guards/*": "./dist/common/guards/*",
+		"#helpers/*": "./dist/common/helpers/*",
 		"#pipes/*": "./dist/common/pipes/*"
 	},
 	"allowScripts": {
