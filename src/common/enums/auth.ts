@@ -3,3 +3,8 @@ export enum IdentifierType {
 	PHONE = 'phone',
 	USERNAME = 'username',
 }
+
+export enum CookiePrefix {
+	Host = '__Host-',
+	Secure = '__Secure-',
+}

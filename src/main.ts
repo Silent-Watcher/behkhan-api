@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import helmet from 'helmet';
 import { Logger } from 'pino-nestjs';
+import { setupCookieParser } from '#bootstrap/setup-cookie-parser.js';
 import { setupPassport } from '#bootstrap/setup-passport.js';
 import { setupVersioning } from '#bootstrap/setup-versioning.js';
 import { AppModule } from './app.module.js';
@@ -13,8 +14,6 @@ import { setupSession } from './bootstrap/setup-session.js';
 import { setupStartupLogs } from './bootstrap/setup-startup-logs.js';
 import { setupSwagger } from './bootstrap/setup-swagger.js';
 import type { HttpConfig } from './configs/http.config.js';
-import cookieParser from 'cookie-parser';
-import { setupCookieParser } from '#bootstrap/setup-cookie-parser.js';
 
 async function bootstrap() {
 	setupEnv();

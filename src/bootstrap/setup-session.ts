@@ -5,6 +5,7 @@ import { DataSource } from 'typeorm';
 import { isProduction } from '#constants/environment.js';
 import { _1DAY_TO_MS, _1DAY_TO_SECONDS } from '#constants/time.js';
 import { SessionEntitiy } from '#modules/session/session.entity.js';
+import { CookiePrefix } from '#enums/auth.js';
 
 export function setupSession(app: INestApplication, secret: string) {
 	const sessionRepository = app.get(DataSource).getRepository(SessionEntitiy);
@@ -13,6 +14,7 @@ export function setupSession(app: INestApplication, secret: string) {
 		session({
 			secret,
 			saveUninitialized: false,
+			name: `${isProduction ? CookiePrefix.Host : ''}behkhan.session`,
 			resave: false,
 			cookie: {
 				httpOnly: true,
