@@ -10,13 +10,13 @@ import {
 	Post,
 } from '@nestjs/common';
 import type { Operation } from 'fast-json-patch';
+import { ApiUtilService } from '#modules/util/api-util.service.js';
 import { JsonPatchValidationPipe } from '#pipes/json-patch-validation.pipe.js';
 import type { AchievementEntity } from './achievement.entity.js';
 import { AchievementService } from './achievement.service.js';
 // biome-ignore lint/style/useImportType: <we need to emit some metadata for this type>
 import { CreateAchievementDto } from './dtos/create-achievement.dto.js';
 import { AchievementByIdPipe } from './pipes/achievement-by-id.pipe.js';
-import { ApiUtilService } from '#modules/util/api-util.service.js';
 
 @Controller('achievements')
 export class AchievementController {

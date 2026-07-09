@@ -8,7 +8,8 @@ import type { ConfigType } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import type { Profile } from 'passport';
 import { Strategy } from 'passport-google-oauth20';
-import type { DataSource } from 'typeorm';
+// biome-ignore lint/style/useImportType: <we need to emit some metada data for this type>
+import { DataSource } from 'typeorm';
 import { AuthProvider } from '#enums/auth.js';
 import { UserEntity } from '#modules/user/user.entity.js';
 import { UserService } from '#modules/user/user.service.js';
@@ -29,6 +30,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
 			clientSecret: googleAuthConf.clientSecret,
 			callbackURL: googleAuthConf.callbackURL,
 			scope: ['email', 'profile'],
+			state: true,
 		});
 	}
 

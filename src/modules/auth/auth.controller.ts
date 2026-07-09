@@ -20,14 +20,14 @@ import {
 	logoutUser,
 	regenerateSession,
 } from '#helpers/auth.helper.js';
+import { User } from '#modules/user/user.decorator.js';
+import type { UserEntity } from '#modules/user/user.entity.js';
+import { ApiUtilService } from '#modules/util/api-util.service.js';
 import { AuthService } from './auth.service.js';
 // biome-ignore lint/style/useImportType: <we need to emit some metadata for our dto>
 import { SignupDto } from './dtos/signup.dto.js';
 import { GoogleAuthGuard } from './guards/google-auth.guard.js';
 import { LocalAuthGuard } from './guards/local-auth.guard.js';
-import { ApiUtilService } from '#modules/util/api-util.service.js';
-import { User } from '#modules/user/user.decorator.js';
-import { UserEntity } from '#modules/user/user.entity.js';
 
 @Controller('auth')
 export class AuthController {

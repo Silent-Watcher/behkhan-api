@@ -18,10 +18,7 @@ export class ApiUtilService {
 		return Number(version);
 	}
 
-	getLocationHeader(
-		entityName: string,
-		entityIdentifier: string,
-	): string {
+	getLocationHeader(entityName: string, entityIdentifier: string): string {
 		return `/${API_GLOBAL_PREFIX}/${entityName}/${entityIdentifier}`;
 	}
 }
