@@ -5,6 +5,7 @@ import databaseConfig from './database.config.js';
 import httpConfig from './http.config.js';
 import pinoConfig from './pino.config.js';
 import secretConfig from './secret.config.js';
+import googleAuthConfig from './google-auth.config.js';
 
 export const configModuleOptions: ConfigModuleOptions = {
 	isGlobal: true,
@@ -17,5 +18,6 @@ export const configModuleOptions: ConfigModuleOptions = {
 		corsConfig,
 		databaseConfig,
 		secretConfig,
+		googleAuthConfig,
 	],
 };

@@ -8,3 +8,7 @@ export enum CookiePrefix {
 	Host = '__Host-',
 	Secure = '__Secure-',
 }
+
+export enum AuthProvider {
+	GOOGLE = 'google',
+}

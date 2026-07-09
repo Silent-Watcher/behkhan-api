@@ -20,6 +20,8 @@ import adminPanelConfig from './configs/admin-panel.config.js';
 import databaseConfig from './configs/database.config.js';
 import { configModuleOptions } from './configs/index.js';
 import pinoConfig from './configs/pino.config.js';
+import { AchievementEntity } from '#modules/achievement/achievement.entity.js';
+import { ExternalIdentityEntity } from '#modules/auth/external-identity.entity.js';
 
 @Module({
 	imports: [
@@ -37,7 +39,12 @@ import pinoConfig from './configs/pino.config.js';
 					synchronize: isDevelopment,
 					logging: isDevelopment,
 					maxQueryExecutionTime: 1000,
-					entities: [UserEntity, SessionEntitiy],
+					entities: [
+						UserEntity,
+						SessionEntitiy,
+						AchievementEntity,
+						ExternalIdentityEntity,
+					],
 				};
 			},
 			inject: [databaseConfig.KEY],

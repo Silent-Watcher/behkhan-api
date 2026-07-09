@@ -9,6 +9,8 @@ import {
 	Post,
 	Req,
 	UseGuards,
+	Version,
+	VERSION_NEUTRAL,
 } from '@nestjs/common';
 import type { Request } from 'express';
 import { GuestOnly } from '#decorators/guest-only.decorator.js';
@@ -22,6 +24,7 @@ import { AuthService } from './auth.service.js';
 // biome-ignore lint/style/useImportType: <we need to emit some metadata for our dto>
 import { SignupDto } from './dtos/signup.dto.js';
 import { LocalAuthGuard } from './guards/local-auth.guard.js';
+import { GoogleAuthGuard } from './guards/google-auth.guard.js';
 
 @Controller('auth')
 export class AuthController {
@@ -72,5 +75,21 @@ export class AuthController {
 			throw new BadRequestException('service unavailable');
 		const token = req.csrfToken();
 		return { csrfToken: token };
+	}
+
+	@Public()
+	@GuestOnly()
+	@UseGuards(GoogleAuthGuard)
+	@Version(VERSION_NEUTRAL)
+	@Get('google')
+	authenticateWithGoogleProvider() {}
+
+	@UseGuards(GoogleAuthGuard)
+	@Version(VERSION_NEUTRAL)
+	@GuestOnly()
+	@Public()
+	@Get('google/callback')
+	googleCallback(@Req() req: Request) {
+		return { user: req.user, message: 'Successfull!' };
 	}
 }

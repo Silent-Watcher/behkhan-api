@@ -24,15 +24,13 @@ async function bootstrap() {
 		infer: true,
 	});
 	const { port, host } = config.get<HttpConfig>('http', { infer: true });
-	// const sessionSecret = config.get('secret.session', { infer: true });
-	// const csrfSecret = config.get('secret.csrf', { infer: true });
 	const { csrf, session } = config.get('secret', { infer: true });
 	const allowedOrigins: Set<string> = new Set(origin);
 
 	const logger = app.get(Logger);
 
 	app.use(helmet());
-	setupVersioning(app);
+	// setupVersioning(app);
 
 	setupStartupLogs(logger);
 	setupCookieParser(app);

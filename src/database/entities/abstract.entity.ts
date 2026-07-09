@@ -6,7 +6,7 @@ import {
 } from 'typeorm';
 
 export abstract class AbstractEntity {
-	@PrimaryGeneratedColumn({ unsigned: true })
+	@PrimaryGeneratedColumn('uuid')
 	declare id: number;
 
 	@CreateDateColumn()

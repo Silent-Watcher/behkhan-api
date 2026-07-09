@@ -12,7 +12,8 @@ export class ApiUtilService {
 		const version = acceptHeader?.split(
 			API_MEDIA_TYPE_VERSIONING_PAIR_SEPERATOR,
 		)[1];
-		if (!version) return Number(API_DEFAULT_VERSION);
+		if (!version || Number.isNaN(version))
+			return Number(API_DEFAULT_VERSION);
 		return Number(version);
 	}
 }

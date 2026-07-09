@@ -7,6 +7,7 @@ import { AuthController } from './auth.controller.js';
 import { AuthService } from './auth.service.js';
 import { SessionSerializer } from './session.serializer.js';
 import { LocalStrategy } from './strategies/local.strategy.js';
+import { GoogleStrategy } from './strategies/google.strategy.js';
 
 @Module({
 	imports: [
@@ -15,6 +16,6 @@ import { LocalStrategy } from './strategies/local.strategy.js';
 		PassportModule,
 	],
 	controllers: [AuthController],
-	providers: [AuthService, LocalStrategy, SessionSerializer],
+	providers: [AuthService, LocalStrategy, GoogleStrategy, SessionSerializer],
 })
 export class AuthModule {}

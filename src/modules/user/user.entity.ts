@@ -1,6 +1,14 @@
-import { Column, Entity, Index, ManyToMany } from 'typeorm';
+import {
+	Column,
+	Entity,
+	Index,
+	ManyToMany,
+	OneToMany,
+	Relation,
+} from 'typeorm';
 import { AbstractEntity } from '#database/entities/abstract.entity.js';
 import { AchievementEntity } from '#modules/achievement/achievement.entity.js';
+import { ExternalIdentityEntity } from '#modules/auth/external-identity.entity.js';
 
 @Entity({ name: 'users' })
 export class UserEntity extends AbstractEntity {
@@ -72,6 +80,15 @@ export class UserEntity extends AbstractEntity {
 	})
 	declare xpCount: number;
 
+	@OneToMany(
+		() => ExternalIdentityEntity,
+		(identity) => identity.user,
+		{
+			cascade: ['insert'],
+		},
+	)
+	declare identities: (Relation<ExternalIdentityEntity> | null)[];
+
 	@ManyToMany(() => AchievementEntity)
-	declare achievements: (AchievementEntity | null)[];
+	declare achievements: (Relation<AchievementEntity> | null)[];
 }

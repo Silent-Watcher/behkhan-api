@@ -6,15 +6,16 @@ import {
 	Injectable,
 } from '@nestjs/common';
 import argon2 from 'argon2';
-import { IdentifierType } from '#enums/auth.js';
+import { AuthProvider, IdentifierType } from '#enums/auth.js';
 import { UserEntity } from '#modules/user/user.entity.js';
 import { UserService } from '#modules/user/user.service.js';
 import {
 	EMAIL_REGEX,
 	IRANIAN_PHONE_REGEX,
 	USERNAME_REGEX,
-} from '../../common/regex/index.js';
+} from '#regex/index.js';
 import type { SignupDto } from './dtos/signup.dto.js';
+import { ExternalIdentityEntity } from './external-identity.entity.js';
 
 @Injectable()
 export class AuthService {
@@ -45,7 +46,6 @@ export class AuthService {
 		newUser = this.applyIdentifier(newUser, identifier);
 
 		const user = await this.userService.save(newUser);
-		console.log('user: ', user);
 		return user;
 	}
 
@@ -66,6 +66,18 @@ export class AuthService {
 		if (!passwordVerified) return null;
 
 		return user;
+	}
+
+	findOneByExternalIdentity(
+		providerUserId: string,
+		provider: AuthProvider,
+		projection?: Partial<Record<keyof UserEntity, boolean>>,
+	): Promise<ExternalIdentityEntity | null> {
+		return this.userService.findOneByExternalIdentity(
+			providerUserId,
+			provider,
+			projection,
+		);
 	}
 
 	private getIdentifierType(identifier: string): IdentifierType | undefined {
