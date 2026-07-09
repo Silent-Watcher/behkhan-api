@@ -6,14 +6,16 @@ import { UserModule } from '#modules/user/user.module.js';
 import { AuthController } from './auth.controller.js';
 import { AuthService } from './auth.service.js';
 import { SessionSerializer } from './session.serializer.js';
-import { LocalStrategy } from './strategies/local.strategy.js';
 import { GoogleStrategy } from './strategies/google.strategy.js';
+import { LocalStrategy } from './strategies/local.strategy.js';
+import { UtilModule } from '#modules/util/util.module.js';
 
 @Module({
 	imports: [
 		TypeOrmModule.forFeature([UserEntity]),
 		UserModule,
 		PassportModule,
+		UtilModule,
 	],
 	controllers: [AuthController],
 	providers: [AuthService, LocalStrategy, GoogleStrategy, SessionSerializer],

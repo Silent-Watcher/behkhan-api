@@ -57,7 +57,13 @@ export const envSchema = z.object({
 	DB_NAME: z.string().trim().min(1, 'DB_NAME is required'),
 	SESSION_SECRET: z.string().trim().min(1, 'SESSION_SECRET required'),
 	CSRF_SECRET: z.string().trim().min(1, 'CSRF_SECRET required'),
-    GOOGLE_CLIENT_ID: z.string().trim().min(1, 'GOOGLE_CLIENT_ID is required'),
-    GOOGLE_CLIENT_SECRET: z.string().trim().min(1, 'GOOGLE_CLIENT_SECRET is required'),
-    GOOGLE_CALLBACK_URL: z.string().trim().min(1, 'GOOGLE_CALLBACK_URL is required'),
+	GOOGLE_CLIENT_ID: z.string().trim().min(1, 'GOOGLE_CLIENT_ID is required'),
+	GOOGLE_CLIENT_SECRET: z
+		.string()
+		.trim()
+		.min(1, 'GOOGLE_CLIENT_SECRET is required'),
+	GOOGLE_CALLBACK_URL: z
+		.string()
+		.trim()
+		.min(1, 'GOOGLE_CALLBACK_URL is required'),
 });

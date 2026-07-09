@@ -4,7 +4,7 @@ import {
 	Index,
 	ManyToMany,
 	OneToMany,
-	Relation,
+	type Relation,
 } from 'typeorm';
 import { AbstractEntity } from '#database/entities/abstract.entity.js';
 import { AchievementEntity } from '#modules/achievement/achievement.entity.js';

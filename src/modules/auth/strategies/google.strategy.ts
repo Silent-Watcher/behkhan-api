@@ -4,16 +4,16 @@ import {
 	Inject,
 	Injectable,
 } from '@nestjs/common';
-import { PassportStrategy } from '@nestjs/passport';
-import { Strategy } from 'passport-google-oauth20';
-import googleAuthConfig from '../../../configs/google-auth.config.js';
 import type { ConfigType } from '@nestjs/config';
+import { PassportStrategy } from '@nestjs/passport';
 import type { Profile } from 'passport';
+import { Strategy } from 'passport-google-oauth20';
+import type { DataSource } from 'typeorm';
 import { AuthProvider } from '#enums/auth.js';
 import { UserEntity } from '#modules/user/user.entity.js';
-import { DataSource } from 'typeorm';
-import { ExternalIdentityEntity } from '../external-identity.entity.js';
 import { UserService } from '#modules/user/user.service.js';
+import googleAuthConfig from '../../../configs/google-auth.config.js';
+import { ExternalIdentityEntity } from '../external-identity.entity.js';
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {

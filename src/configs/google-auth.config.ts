@@ -1,5 +1,5 @@
-import _env from '#bootstrap/setup-env.js';
 import { registerAs } from '@nestjs/config';
+import _env from '#bootstrap/setup-env.js';
 
 export default registerAs('googleAuth', () =>
 	Object.freeze({

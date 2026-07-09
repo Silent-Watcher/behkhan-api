@@ -16,12 +16,15 @@ import { AchievementService } from './achievement.service.js';
 // biome-ignore lint/style/useImportType: <we need to emit some metadata for this type>
 import { CreateAchievementDto } from './dtos/create-achievement.dto.js';
 import { AchievementByIdPipe } from './pipes/achievement-by-id.pipe.js';
+import { ApiUtilService } from '#modules/util/api-util.service.js';
 
 @Controller('achievements')
 export class AchievementController {
 	constructor(
 		@Inject(forwardRef(() => AchievementService))
 		private readonly achievementService: AchievementService,
+		@Inject(forwardRef(() => ApiUtilService))
+		private readonly apiUtilService: ApiUtilService,
 	) {}
 
 	@Post()
@@ -30,7 +33,7 @@ export class AchievementController {
 
 		if (!achievement) {
 			throw new InternalServerErrorException(
-				'Service Unavailable, try again',
+				'Service is Unavailable, try again',
 			);
 		}
 
@@ -38,7 +41,10 @@ export class AchievementController {
 		return {
 			data: achievement,
 			message: 'Created!',
-			__location: `http:localhost:8080/api/achievements/${achievement.id}`,
+			__location: this.apiUtilService.getLocationHeader(
+				'achievements',
+				achievement.id,
+			),
 		};
 	}
 

@@ -9,8 +9,8 @@ import {
 	Post,
 	Req,
 	UseGuards,
-	Version,
 	VERSION_NEUTRAL,
+	Version,
 } from '@nestjs/common';
 import type { Request } from 'express';
 import { GuestOnly } from '#decorators/guest-only.decorator.js';
@@ -23,14 +23,19 @@ import {
 import { AuthService } from './auth.service.js';
 // biome-ignore lint/style/useImportType: <we need to emit some metadata for our dto>
 import { SignupDto } from './dtos/signup.dto.js';
-import { LocalAuthGuard } from './guards/local-auth.guard.js';
 import { GoogleAuthGuard } from './guards/google-auth.guard.js';
+import { LocalAuthGuard } from './guards/local-auth.guard.js';
+import { ApiUtilService } from '#modules/util/api-util.service.js';
+import { User } from '#modules/user/user.decorator.js';
+import { UserEntity } from '#modules/user/user.entity.js';
 
 @Controller('auth')
 export class AuthController {
 	constructor(
 		@Inject(forwardRef(() => AuthService))
 		private readonly authService: AuthService,
+		@Inject(forwardRef(() => ApiUtilService))
+		private readonly apiUtilService: ApiUtilService,
 	) {}
 
 	@Public()
@@ -43,7 +48,11 @@ export class AuthController {
 		await loginUser(req, user);
 
 		// TODO: set Location response header
-		return { data: user, message: 'Successfull!' };
+		return {
+			user,
+			message: 'Successfull!',
+			__location: this.apiUtilService.getLocationHeader('users', user.id),
+		};
 	}
 
 	@Public()
@@ -89,7 +98,13 @@ export class AuthController {
 	@GuestOnly()
 	@Public()
 	@Get('google/callback')
-	googleCallback(@Req() req: Request) {
-		return { user: req.user, message: 'Successfull!' };
+	googleCallback(@User() user: UserEntity) {
+		const { id } = user;
+
+		return {
+			user,
+			message: 'Successfull!',
+			__location: this.apiUtilService.getLocationHeader('users', id),
+		};
 	}
 }

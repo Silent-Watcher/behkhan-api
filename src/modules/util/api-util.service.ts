@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import type { Request } from 'express';
 import {
 	API_DEFAULT_VERSION,
+	API_GLOBAL_PREFIX,
 	API_MEDIA_TYPE_VERSIONING_PAIR_SEPERATOR,
 } from '#constants/app.js';
 
@@ -15,5 +16,12 @@ export class ApiUtilService {
 		if (!version || Number.isNaN(version))
 			return Number(API_DEFAULT_VERSION);
 		return Number(version);
+	}
+
+	getLocationHeader(
+		entityName: string,
+		entityIdentifier: string,
+	): string {
+		return `/${API_GLOBAL_PREFIX}/${entityName}/${entityIdentifier}`;
 	}
 }

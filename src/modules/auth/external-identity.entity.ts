@@ -1,8 +1,8 @@
+import type { Relation } from 'typeorm';
+import { Column, Entity, In, Index, ManyToOne, Unique } from 'typeorm';
 import { AbstractEntity } from '#database/entities/abstract.entity.js';
 import { AuthProvider } from '#enums/auth.js';
 import { UserEntity } from '#modules/user/user.entity.js';
-import { Column, Entity, ManyToOne, Unique } from 'typeorm';
-import type { Relation } from 'typeorm';
 
 @Entity('external_identities')
 @Unique('UQ_provider_providerUserId', ['provider', 'providerUserId'])
@@ -11,6 +11,7 @@ export class ExternalIdentityEntity extends AbstractEntity {
 		type: 'enum',
 		enum: AuthProvider,
 	})
+	@Index('IDX_provider', ['provider'])
 	declare provider: string;
 
 	@Column({

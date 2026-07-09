@@ -15,6 +15,7 @@ import { setupSession } from './bootstrap/setup-session.js';
 import { setupStartupLogs } from './bootstrap/setup-startup-logs.js';
 import { setupSwagger } from './bootstrap/setup-swagger.js';
 import type { HttpConfig } from './configs/http.config.js';
+import { API_GLOBAL_PREFIX } from '#constants/app.js';
 
 async function bootstrap() {
 	setupEnv();
@@ -38,7 +39,7 @@ async function bootstrap() {
 	setupCsrf(app, csrf);
 
 	app.useLogger(logger);
-	app.setGlobalPrefix('api');
+	app.setGlobalPrefix(API_GLOBAL_PREFIX);
 
 	setupCors(app, allowedOrigins, { credentials, maxAge });
 	setupSwagger(app);

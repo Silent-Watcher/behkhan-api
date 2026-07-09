@@ -6,7 +6,7 @@ import {
 	Injectable,
 } from '@nestjs/common';
 import argon2 from 'argon2';
-import { AuthProvider, IdentifierType } from '#enums/auth.js';
+import { type AuthProvider, IdentifierType } from '#enums/auth.js';
 import { UserEntity } from '#modules/user/user.entity.js';
 import { UserService } from '#modules/user/user.service.js';
 import {
@@ -15,7 +15,7 @@ import {
 	USERNAME_REGEX,
 } from '#regex/index.js';
 import type { SignupDto } from './dtos/signup.dto.js';
-import { ExternalIdentityEntity } from './external-identity.entity.js';
+import type { ExternalIdentityEntity } from './external-identity.entity.js';
 
 @Injectable()
 export class AuthService {

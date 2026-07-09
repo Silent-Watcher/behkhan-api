@@ -1,10 +1,10 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import type { Repository } from 'typeorm';
+import type { AuthProvider } from '#enums/auth.js';
+import { ExternalIdentityEntity } from '#modules/auth/external-identity.entity.js';
 import type { UserEntity } from './user.entity.js';
 import { UserRepository } from './user.repository.js';
-import { ExternalIdentityEntity } from '#modules/auth/external-identity.entity.js';
-import type { Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
-import type { AuthProvider } from '#enums/auth.js';
 
 @Injectable()
 export class UserService {
@@ -51,7 +51,7 @@ export class UserService {
 		return this.externalIdentityRepo.findOne({
 			where: {
 				providerUserId,
-				provider
+				provider,
 			},
 			relations: {
 				user: true,
